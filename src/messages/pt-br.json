@@ -1,0 +1,33 @@
+{
+  "SideBar": {
+    "Dashboard": "Painel",
+
+    "Integration": "Integração",
+    "Documentation": "Documentação",
+    "API": "API",
+    "Webhooks": "Webhooks",
+
+    "Services": "Serviços",
+    "Products": "Produtos",
+    "Papers": "Artigos",
+    "Documents": "Documentos",
+    "Videos": "Vídeos",
+    "Images": "Imagens",
+
+    "Analytics": "Análises",
+    "Usage": "Uso",
+    "Reports": "Relatórios",
+
+    "Admin": "Administração",
+    "Team": "Equipe",
+    "AuditLogs": "Registros de Auditoria",
+
+    "Soon": "Em breve"
+  },
+
+  "HomePage": {
+    "title": "Olá mundo!"
+  },
+
+  "LoginPage": {}
+}

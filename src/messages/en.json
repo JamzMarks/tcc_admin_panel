@@ -1,0 +1,279 @@
+{
+  "HomePage": {
+    "title": "Welcome to the Admin Panel",
+    "description": "This is the dashboard where you can manage users, devices, and view analytics.",
+    "loading": "Loading dashboard..."
+  },
+  "SideBar": {
+    "Dashboard": "Dashboard",
+    "Integration": "Integration",
+    "Documentation": "Documentation",
+    "API": "API & Services",
+    "Devices": "Devices",
+    "Camera": "Camera",
+    "Trafficl": "Traffic Light",
+    "Services": "Services",
+    "Packs": "Packs",
+    "Graph": "Graph Map",
+    "Analytics": "Analytics",
+    "Reports": "Reports",
+    "Admin": "Admin",
+    "Users": "Users",
+    "AuditLogs": "Audit Logs",
+    "Soon": "Soon"
+  },
+  "ThemeSwitcher": {
+    "light": "Switch to light theme",
+    "dark": "Switch to dark theme"
+  },
+  "Settings": {
+    "AccountSection": {
+      "title": "Account",
+      "email": {
+        "label": "Your email",
+        "changeButton": "Change email",
+        "helpText": "We’ll use this email to contact you."
+      },
+      "password": {
+        "label": "Password",
+        "changeButton": "Change password",
+        "helpText": "Ensure your account is using a long, random password to stay secure."
+      },
+      "metadata": {
+        "userId": "User ID",
+        "createdAt": "Created At",
+        "loginMethod": "Login Method"
+      },
+      "delete": {
+        "title": "Delete Account",
+        "description": "This will permanently delete your account and all associated data.",
+        "confirmMessage": "Are you sure you want to delete your account? This action cannot be undone.",
+        "successMock": "Account deleted (mock).",
+        "resourceName": "Account"
+      }
+    }
+  },
+  "LoginPage": {},
+  "VerifyEmailPage": {
+    "check": "Verify your email",
+    "description": "We sent you a verification link. Please check your email and click on the link to verify your account.",
+    "successMessage": "Your email has been successfully verified. You can now log in.",
+    "errorMessage": "There was an error verifying your email. Please try again later."
+  },
+  "Apis": {
+    "title": "APIs & Services",
+    "sectionTitle": "APIs and Scripts",
+    "sectionDescription": "Central hub to access <strong>microservices API documentation</strong>, scripts references, and links to related repositories.",
+
+    "swagger": {
+      "title": "Swagger Docs",
+      "description": "Browse the interactive API documentation for all microservices.",
+      "button": "Open Swagger"
+    },
+
+    "repositories": {
+      "title": "Repositories",
+      "description": "Access the source code of APIs and services on GitHub.",
+      "button": "Go to GitHub"
+    },
+
+    "scripts": {
+      "title": "Scripts",
+      "description": "Useful CLI and automation scripts for setup, migrations and monitoring.",
+      "items": {
+        "setup": "Setup & Deploy",
+        "migration": "DB Migration",
+        "monitoring": "Monitoring"
+      }
+    },
+    "microservices": {
+      "title": "Microservices"
+    }
+  },
+  "UsersPage": {
+    "title": "User Management",
+    "header": "Users Overview",
+    "description": "Manage your users here. You can create, edit, and delete users.",
+    "createUserButton": "Create User",
+    "searchPlaceholder": "Search users...",
+    "filterLabel": "Filter by:",
+    "orderByLabel": "Order by:",
+    "recentOption": "Recent",
+    "lastOption": "Last",
+    "noUsersMessage": "No users found.",
+    "resource": "Users",
+    "filters": {
+      "filters": "Users Filters",
+
+      "RolesCombobox": {
+        "Roles": {
+          "Admin": "Admin",
+          "User": "User",
+          "Engineer": "Engineer",
+          "Developer": "Developer",
+          "Auditor": "Auditor"
+        },
+        "Placeholder": "Select a role...",
+        "Resource": "role",
+        "Description": "Users role",
+        "ActiveOption": "Active",
+        "InactiveOption": "Inactive"
+      },
+      "StatusCombobox": {
+        "Placeholder": "Select a status...",
+        "Resource": "status",
+        "Description": "Object status",
+        "ActiveOption": "Active",
+        "InactiveOption": "Inactive"
+      }
+    },
+    "UserTable": {
+      "user": "User",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "createdAt": "Created at",
+      "viewDetails": "View Details",
+      "loading": "Loading Users please wait...",
+      "noUsers": "Error in fetching users, try again later."
+    },
+    "UsersList": {
+      "userList": "Users List",
+      "totalUsers": "Total Users",
+      "activeUsers": "Active Users",
+      "inactiveUsers": "Inactive Users",
+      "adminUsers": "Admin Users",
+      "userUsers": "User Users"
+    },
+    "Roles": {
+      "ADMIN": "Admin",
+      "USER": "User",
+      "ENGINEER": "Engineer",
+      "DEVELOPER": "Developer",
+      "AUDITOR": "Auditor"
+    },
+    "UsersModal": {
+      "createTitle": "Create User",
+      "editTitle": "Edit User",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "roleLabel": "Role",
+      "statusLabel": "Status",
+      "activeOption": "Active",
+      "inactiveOption": "Inactive",
+      "adminOption": "Admin",
+      "userOption": "User",
+      "engineerOption": "Engineer",
+      "developerOption": "Developer",
+      "auditorOption": "Auditor",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm Password",
+      "submitButton": "Submit",
+      "cancelButton": "Cancel",
+      "Roles": {
+        "Admin": "Admin",
+        "User": "User",
+        "Engineer": "Engineer",
+        "Developer": "Developer",
+        "Auditor": "Auditor"
+      }
+    }
+  },
+  "Devices": {
+    "Camera": {
+      "resource": "cameras",
+      "filters": {
+        "title": "Camera Filters",
+
+        "Combobox": {
+          "Placeholder": "Select a status...",
+          "Resource": "status",
+          "Description": "Object status",
+          "ActiveOption": "Active",
+          "InactiveOption": "Inactive"
+        }
+      }
+    },
+    "TrafficLight": {
+      "notFound": "No traffic lights were found",
+      "Table": {
+        "status": "Status",
+        "device": "Device ID",
+        "mac": "MAC",
+        "ip": "IP Address",
+        "createAt": "Created at",
+        "packId": "Pack ID",
+        "subpackId": "SubPack ID",
+
+        "notlinked": "Not linked",
+        "dateNot": "Date not informed",
+        "Actions": {
+          "actionsTable": "Actions",
+          "edit": "Edit traffic light",
+          "delete": "Delete traffic light"
+        }
+      },
+      "filters": {
+        "title": "Traffic Light Filters",
+        "searchPlaceholder": "Filter MAC or Azure Device ID",
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "pack": "Pack Id",
+        "subpack": "Subpack id",
+        "clear": "Clear",
+        "Combobox": {
+          "Placeholder": "Select a status...",
+          "Resource": "status",
+          "Description": "Object status",
+          "ActiveOption": "Active",
+          "InactiveOption": "Inactive"
+        }
+      }
+    }
+  },
+  "Badge": {
+    "Status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "Modal": {
+    "Notifications": {
+      "title": "Notifications",
+      "empty": "No notifications found.",
+      "error": "Error Loading notifications."
+    },
+    "GenericDelete": {
+      "title": "Delete <object>{resource}</object>",
+      "sure": "Are you sure you want to delete <object>{data}</object>?",
+      "thisAction": "This action cannot be undone.",
+      "confirmationMessage": "To confirm, please type <object>{resource}</object>.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "type": "Type",
+      "close": "Close"
+    },
+    "ComboBox": {
+      "notFound": "None <object>{resource}</object> was found."
+    }
+  },
+  "BaseTable": {
+    "notFound": "None {{object}} was found.",
+    "loading": "Loading please wait...",
+    "error": "Unexpected error, please try again later."
+  },
+  "CommonFilters": {
+    "StatusFilter": {
+      "Placeholder": "Select a status...",
+      "Resource": "status",
+      "Description": "Object status",
+      "ActiveOption": "Active",
+      "InactiveOption": "Inactive"
+    }
+  }
+}
