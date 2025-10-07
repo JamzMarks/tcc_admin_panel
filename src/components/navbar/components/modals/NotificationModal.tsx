@@ -5,7 +5,7 @@ import Image from 'next/image'
 export const NotificationModal = () => {
   const t = useTranslations('Modal.Notifications')
   return (
-    <div className="bg-white rounded-lg z-50 w-80 p-4 shadow-xl border border-gray-200 dark:bg-background-dark dark:border dark:border-zinc-800">
+    <div className="bg-white rounded-lg z-50 w-80 p-4 border border-gray-200 dark:bg-background-dark dark:border dark:border-zinc-800">
       <div className="flex items-center justify-between pb-2">
         <h3 className="text-lg font-semibold text-gray-800">{t('title')}</h3>
         <Bell className="w-5 h-5 text-gray-500" />

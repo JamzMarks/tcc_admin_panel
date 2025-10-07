@@ -39,7 +39,7 @@ const GraphRender = ({graphData, setSelectedItem}: GraphRenderProps) => {
 
     // Adicionar arestas
     graphData.relationships.forEach((r) => {
-      if (r.type != "HAS_NODE") {
+      if (r.type == "CONNECTED_TO") {
         graph.addEdge(r.startNodeId.toString(), r.endNodeId.toString(), {
           label: r.type,
           color: "gray",

@@ -2,6 +2,7 @@
 import { DashboardSidebar } from "./components/DashboardSidebar/DashboardSidebar";
 import { UIProvider } from "@/context/ui-context";
 import { Navbar } from "@/components/navbar/Navbar";
+import { UserProvider } from "@/context/user-context";
 
 export default async function RootLayout({
   children,
@@ -9,6 +10,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <UserProvider>
     <UIProvider>
       <div>
         <header>
@@ -25,6 +27,7 @@ export default async function RootLayout({
         </main>
       </div>
     </UIProvider>
+    </UserProvider>
   );
 }
 

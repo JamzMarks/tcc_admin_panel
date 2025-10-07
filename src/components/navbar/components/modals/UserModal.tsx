@@ -5,7 +5,7 @@ import { LogOut, Settings, User } from "lucide-react";
 
 export const UserModal = () => {
   return (
-    <div className="bg-white rounded-lg z-50 w-52 p-2 shadow-xl dark:bg-background-dark dark:border dark:border-zinc-800">
+    <div className="bg-white rounded-lg z-50 w-52 p-2 dark:bg-background-dark dark:border dark:border-zinc-800">
       <ul className="space-y-1 text-sm">
         <LinkItem linkTo="/admin/profile">
           <User />

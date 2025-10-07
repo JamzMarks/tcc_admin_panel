@@ -24,7 +24,6 @@ export const SignInForm = () => {
     setServerError(null);
     try {
         const res = await AuthClient.Login(data);
-
         
     } catch (error) {
         
