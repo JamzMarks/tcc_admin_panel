@@ -84,7 +84,7 @@ export const PreferencesSection = () => {
           </div>
           <div className="pt-6">
             <Button
-              className="w-full rounded-xl"
+              className="w-full rounded-xl text-white max-w-40"
               onClick={() => alert("Preferences saved!")}
             >
               Save Preferences

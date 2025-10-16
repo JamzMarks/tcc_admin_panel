@@ -15,9 +15,9 @@ export default function TrafficLightTable() {
   const format = useFormatter();
   const [filters, setFilters] = useState<SemaforoFilters>({
     query: null,
-    status: null,
+    isActive: null,
     pack: null,
-    subpack: null,
+    subPack: null,
   });
   const { data, isLoading, isError } = useQuery({
     queryKey: ["semaforo", filters],

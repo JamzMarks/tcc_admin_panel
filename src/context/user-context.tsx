@@ -1,15 +1,12 @@
 "use client";
 
+import { AuthClient } from "@/services/auth.service";
+import { AuthResponse } from "@/types/interfaces/authResponse";
+import { UserResponseDto } from "@/types/interfaces/me";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
 interface UserContextType {
-  user: User | null;
+  user: UserResponseDto | null;
   loading: boolean;
   refreshUser: () => Promise<void>;
   logout: () => Promise<void>;
@@ -18,19 +15,17 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserResponseDto | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchUser = async () => {
+    setError(null);
     try {
-      const res = await fetch("/api/me", { credentials: "include" });
-      if (!res.ok) {
-        setUser(null);
-      } else {
-        const data = await res.json();
-        setUser(data.user);
-      }
-    } catch {
+      const res = await AuthClient.Me();
+      setUser(res.data);
+    } catch (err) {
+      setError("Não foi possível atualizar os dados do usuário.");
       setUser(null);
     } finally {
       setLoading(false);
@@ -47,10 +42,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async () => {
-    await fetch("/api/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+    await AuthClient.Logout()
     setUser(null);
   };
 

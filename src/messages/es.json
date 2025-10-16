@@ -1,0 +1,273 @@
+{
+  "HomePage": {
+    "title": "Bienvenido al Panel de Administración",
+    "description": "Este es el panel donde puedes gestionar usuarios, dispositivos y ver análisis.",
+    "loading": "Cargando el panel..."
+  },
+  "SideBar": {
+    "Dashboard": "Panel",
+    "Integration": "Integración",
+    "Documentation": "Documentación",
+    "API": "API & Servicios",
+    "Devices": "Dispositivos",
+    "Camera": "Cámara",
+    "Trafficl": "Semáforo",
+    "Services": "Servicios",
+    "Packs": "Paquetes",
+    "Graph": "Mapa de Grafo",
+    "Analytics": "Análisis",
+    "Reports": "Informes",
+    "Admin": "Administración",
+    "Users": "Usuarios",
+    "AuditLogs": "Registros de Auditoría",
+    "Soon": "Próximamente"
+  },
+  "ThemeSwitcher": {
+    "light": "Cambiar a tema claro",
+    "dark": "Cambiar a tema oscuro"
+  },
+  "Settings": {
+    "AccountSection": {
+      "title": "Cuenta",
+      "email": {
+        "label": "Tu correo",
+        "changeButton": "Cambiar correo",
+        "helpText": "Usaremos este correo para contactarte."
+      },
+      "password": {
+        "label": "Contraseña",
+        "changeButton": "Cambiar contraseña",
+        "helpText": "Asegúrate de usar una contraseña larga y aleatoria para mantener tu cuenta segura."
+      },
+      "metadata": {
+        "userId": "ID de usuario",
+        "createdAt": "Creado en",
+        "loginMethod": "Método de inicio de sesión"
+      },
+      "delete": {
+        "title": "Eliminar Cuenta",
+        "description": "Esto eliminará permanentemente tu cuenta y todos los datos asociados.",
+        "confirmMessage": "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.",
+        "successMock": "Cuenta eliminada (simulación).",
+        "resourceName": "Cuenta"
+      }
+    }
+  },
+  "LoginPage": {},
+  "VerifyEmailPage": {
+    "check": "Verifica tu correo",
+    "description": "Te enviamos un enlace de verificación. Por favor revisa tu correo y haz clic en el enlace para verificar tu cuenta.",
+    "successMessage": "Tu correo ha sido verificado con éxito. Ahora puedes iniciar sesión.",
+    "errorMessage": "Hubo un error al verificar tu correo. Intenta nuevamente más tarde."
+  },
+  "Apis": {
+    "title": "APIs & Servicios",
+    "sectionTitle": "APIs y Scripts",
+    "sectionDescription": "Centro para acceder a <strong>documentación de APIs de microservicios</strong>, referencias de scripts y enlaces a repositorios relacionados.",
+    "swagger": {
+      "title": "Docs de Swagger",
+      "description": "Navega por la documentación interactiva de las APIs de todos los microservicios.",
+      "button": "Abrir Swagger"
+    },
+    "repositories": {
+      "title": "Repositorios",
+      "description": "Accede al código fuente de APIs y servicios en GitHub.",
+      "button": "Ir a GitHub"
+    },
+    "scripts": {
+      "title": "Scripts",
+      "description": "Scripts CLI útiles para configuración, migraciones y monitoreo.",
+      "items": {
+        "setup": "Configuración & Deploy",
+        "migration": "Migración de BD",
+        "monitoring": "Monitoreo"
+      }
+    },
+    "microservices": {
+      "title": "Microservicios"
+    }
+  },
+  "UsersPage": {
+    "title": "Gestión de Usuarios",
+    "header": "Resumen de Usuarios",
+    "description": "Gestiona tus usuarios aquí. Puedes crear, editar y eliminar usuarios.",
+    "createUserButton": "Crear Usuario",
+    "searchPlaceholder": "Buscar usuarios...",
+    "filterLabel": "Filtrar por:",
+    "orderByLabel": "Ordenar por:",
+    "recentOption": "Recientes",
+    "lastOption": "Últimos",
+    "noUsersMessage": "No se encontraron usuarios.",
+    "resource": "Usuarios",
+    "filters": {
+      "filters": "Filtros de Usuarios",
+      "RolesCombobox": {
+        "Roles": {
+          "ADMIN": "Administrador",
+          "USER": "Usuario",
+          "ENGINEER": "Ingeniero",
+          "DEVELOPER": "Desarrollador",
+          "AUDITOR": "Auditor"
+        },
+        "Placeholder": "Selecciona un rol...",
+        "Resource": "rol",
+        "Description": "Rol del usuario",
+        "ActiveOption": "Activo",
+        "InactiveOption": "Inactivo"
+      },
+      "StatusCombobox": {
+        "Placeholder": "Selecciona un estado...",
+        "Resource": "estado",
+        "Description": "Estado del objeto",
+        "ActiveOption": "Activo",
+        "InactiveOption": "Inactivo"
+      }
+    },
+    "UserTable": {
+      "user": "Usuario",
+      "name": "Nombre",
+      "email": "Correo",
+      "role": "Rol",
+      "status": "Estado",
+      "actions": "Acciones",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "createdAt": "Creado en",
+      "viewDetails": "Ver Detalles",
+      "loading": "Cargando usuarios, por favor espera...",
+      "noUsers": "Error al obtener usuarios, intenta nuevamente más tarde."
+    },
+    "UsersList": {
+      "userList": "Lista de Usuarios",
+      "totalUsers": "Total de Usuarios",
+      "activeUsers": "Usuarios Activos",
+      "inactiveUsers": "Usuarios Inactivos",
+      "adminUsers": "Administradores",
+      "userUsers": "Usuarios"
+    },
+    "Roles": {
+      "ADMIN": "Administrador",
+      "USER": "Usuario",
+      "ENGINEER": "Ingeniero",
+      "DEVELOPER": "Desarrollador",
+      "AUDITOR": "Auditor"
+    },
+    "UsersModal": {
+      "createTitle": "Crear Usuario",
+      "editTitle": "Editar Usuario",
+      "nameLabel": "Nombre",
+      "emailLabel": "Correo",
+      "roleLabel": "Rol",
+      "statusLabel": "Estado",
+      "activeOption": "Activo",
+      "inactiveOption": "Inactivo",
+      "adminOption": "Administrador",
+      "userOption": "Usuario",
+      "engineerOption": "Ingeniero",
+      "developerOption": "Desarrollador",
+      "auditorOption": "Auditor",
+      "passwordLabel": "Contraseña",
+      "confirmPasswordLabel": "Confirmar Contraseña",
+      "submitButton": "Enviar",
+      "cancelButton": "Cancelar",
+      "Roles": {
+        "ADMIN": "Administrador",
+        "USER": "Usuario",
+        "ENGINEER": "Ingeniero",
+        "DEVELOPER": "Desarrollador",
+        "AUDITOR": "Auditor"
+      }
+    }
+  },
+  "Devices": {
+    "Camera": {
+      "resource": "cámaras",
+      "filters": {
+        "title": "Filtros de Cámaras",
+        "Combobox": {
+          "Placeholder": "Selecciona un estado...",
+          "Resource": "estado",
+          "Description": "Estado del objeto",
+          "ActiveOption": "Activo",
+          "InactiveOption": "Inactivo"
+        }
+      }
+    },
+    "TrafficLight": {
+      "notFound": "No se encontraron semáforos",
+      "Table": {
+        "status": "Estado",
+        "device": "ID del dispositivo",
+        "mac": "MAC",
+        "ip": "Dirección IP",
+        "createAt": "Creado en",
+        "packId": "ID del Paquete",
+        "subpackId": "ID del Subpaquete",
+        "notlinked": "No vinculado",
+        "dateNot": "Fecha no informada",
+        "Actions": {
+          "actionsTable": "Acciones",
+          "edit": "Editar semáforo",
+          "delete": "Eliminar semáforo"
+        }
+      },
+      "filters": {
+        "title": "Filtros de Semáforo",
+        "searchPlaceholder": "Filtrar MAC o ID del dispositivo Azure",
+        "all": "Todos",
+        "active": "Activos",
+        "inactive": "Inactivos",
+        "pack": "ID del Paquete",
+        "subpack": "ID del Subpaquete",
+        "clear": "Limpiar",
+        "Combobox": {
+          "Placeholder": "Selecciona un estado...",
+          "Resource": "estado",
+          "Description": "Estado del objeto",
+          "ActiveOption": "Activo",
+          "InactiveOption": "Inactivo"
+        }
+      }
+    }
+  },
+  "Badge": {
+    "Status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
+  },
+  "Modal": {
+    "Notifications": {
+      "title": "Notificaciones",
+      "empty": "No se encontraron notificaciones.",
+      "error": "Error al cargar las notificaciones."
+    },
+    "GenericDelete": {
+      "title": "Eliminar <object>{resource}</object>",
+      "sure": "¿Estás seguro de que deseas eliminar <object>{data}</object>?",
+      "thisAction": "Esta acción no se puede deshacer.",
+      "confirmationMessage": "Para confirmar, escribe <object>{resource}</object>.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "type": "Tipo",
+      "close": "Cerrar"
+    },
+    "ComboBox": {
+      "notFound": "No se encontró ningún <object>{resource}</object>."
+    }
+  },
+  "BaseTable": {
+    "notFound": "No se encontró ningún {{object}}.",
+    "loading": "Cargando, por favor espera...",
+    "error": "Error inesperado, intenta nuevamente más tarde."
+  },
+  "CommonFilters": {
+    "StatusFilter": {
+      "Placeholder": "Selecciona un estado...",
+      "Resource": "estado",
+      "Description": "Estado del objeto",
+      "ActiveOption": "Activo",
+      "InactiveOption": "Inactivo"
+    }
+  }
+}

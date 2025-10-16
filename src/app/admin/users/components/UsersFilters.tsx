@@ -1,7 +1,9 @@
 "use client";
 
 import { SimpleComboBox } from "@/components/ui/combo/SimpleComboBox";
+import { StatusFilter } from "@/components/ui/filters/StatusFilter";
 import { Input } from "@/components/ui/input";
+import { Roles } from "@/types/user/roles.type";
 import { UserFilter } from "@/types/user/user-filters.type";
 import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -15,7 +17,7 @@ export const UserFilters = ({ onFilter }: UserFiltersProps) => {
   const [filters, setFilters] = useState<UserFilter>({
     query: null,
     role: null,
-    status: null,
+    isActive: null,
   });
 
   const handleChange = (
@@ -26,28 +28,12 @@ export const UserFilters = ({ onFilter }: UserFiltersProps) => {
     setFilters(newFilters);
     onFilter(newFilters);
   };
-  
-  const handleStatus = (value: string) => {
-    if (value == "true") {
-      setFilters((prev) => ({
-        ...prev,
-        status: true,
-      }));
-      handleChange("status", true);
-    } else if (value == "false") {
-      setFilters((prev) => ({
-        ...prev,
-        status: false,
-      }));
-      handleChange("status", false);
-    } else {
-      setFilters((prev) => ({
-        ...prev,
-        status: null,
-      }));
-      handleChange("status", null);
-    }
-  };
+
+  const userRoles = Object.entries(Roles).map(([key, value]) => ({
+    label: t(`RolesCombobox.Roles.${key}`),
+    value,
+  }));
+
   return (
     <div className=" space-y-2 overflow-x-auto ">
       <div>
@@ -65,29 +51,22 @@ export const UserFilters = ({ onFilter }: UserFiltersProps) => {
           placeholder={t("RolesCombobox.Placeholder")}
           resource={t("RolesCombobox.Resource")}
           description={t("RolesCombobox.Description")}
-          onChange={handleStatus}
-          options={[
-            { label: t("filters.Combobox.ActiveOption"), value: "admin" },
-            { label: t("filters.Combobox.InactiveOption"), value: "manager" },
-            { label: t("filters.Combobox.InactiveOption"), value: "user" },
-            { label: t("filters.Combobox.InactiveOption"), value: "auditor" },
-          ]}
+          onChange={(e) => handleChange("role", e)}
+          options={userRoles}
         />
-        <SimpleComboBox
-          placeholder={t("StatusCombobox.Placeholder")}
-          resource={t("StatusCombobox.Resource")}
+
+        <StatusFilter
           description={t("StatusCombobox.Description")}
-          onChange={handleStatus}
-          options={[
-            { label: t("StatusCombobox.ActiveOption"), value: "true" },
-            { label: t("StatusCombobox.InactiveOption"), value: "false" },
-          ]}
+          filters={filters}
+          resource={t("StatusCombobox.Resource")}
+          setFilters={setFilters}
+          field={"isActive"} 
         />
 
 
         <button
           onClick={() => {
-            const reset: UserFilter = { query: null, role: null, status: null };
+            const reset: UserFilter = { query: null, role: null, isActive: null };
             setFilters(reset);
             onFilter(reset);
           }}

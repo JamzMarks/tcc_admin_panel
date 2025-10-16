@@ -1,9 +1,13 @@
 
 import { LinkItem } from "@/components/ui/link/LinkItem";
+import { useUser } from "@/context/user-context";
 import { LogOut, Settings, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 
 export const UserModal = () => {
+  const router = useRouter();
+  const {logout} = useUser();
   return (
     <div className="bg-white rounded-lg z-50 w-52 p-2 dark:bg-background-dark dark:border dark:border-zinc-800">
       <ul className="space-y-1 text-sm">
@@ -17,7 +21,10 @@ export const UserModal = () => {
           Settings
         </LinkItem>
         <button
-          onClick={() => console.log("logout")}
+          onClick={async () => {
+            await logout()
+            router.push("/admin");
+          }}
           className="cursor-pointer text-red-400  hover:bg-red-50 dark:hover:bg-red-950 flex gap-2 items-center w-full justify-start p-2 rounded-md text-sm"
         >
           <LogOut />

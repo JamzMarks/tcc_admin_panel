@@ -1,7 +1,10 @@
 
+'use client'
+import { useUser } from '@/context/user-context';
 import {useTranslations} from 'next-intl'; 
 
 const Dashboard = () => {
+  const {user } = useUser()
   const t = useTranslations('HomePage');
   return (
       <section>

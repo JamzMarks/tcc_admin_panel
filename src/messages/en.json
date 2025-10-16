@@ -104,14 +104,13 @@
     "resource": "Users",
     "filters": {
       "filters": "Users Filters",
-
       "RolesCombobox": {
         "Roles": {
-          "Admin": "Admin",
-          "User": "User",
-          "Engineer": "Engineer",
-          "Developer": "Developer",
-          "Auditor": "Auditor"
+          "ADMIN": "Admin",
+          "USER": "User",
+          "ENGINEER": "Engineer",
+          "DEVELOPER": "Developer",
+          "AUDITOR": "Auditor"
         },
         "Placeholder": "Select a role...",
         "Resource": "role",
@@ -175,11 +174,11 @@
       "submitButton": "Submit",
       "cancelButton": "Cancel",
       "Roles": {
-        "Admin": "Admin",
-        "User": "User",
-        "Engineer": "Engineer",
-        "Developer": "Developer",
-        "Auditor": "Auditor"
+        "ADMIN": "Admin",
+        "USER": "User",
+        "ENGINEER": "Engineer",
+        "DEVELOPER": "Developer",
+        "AUDITOR": "Auditor"
       }
     }
   },

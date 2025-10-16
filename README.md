@@ -190,3 +190,8 @@ Configurar as variáveis de ambiente diretamente no painel da **Vercel**.
 
 > [!CAUTION]
 > Bearer Token com error.
+
+AUTH_API_URL=https://localhost:4000/api/v1/
+DEVICES_API_URL=http://localhost:3005/api/v1/
+METRICS_API_URL=http://localhost:3006/api/v1/
+NEXT_PUBLIC_AUTH_API_URL=https://localhost:3000

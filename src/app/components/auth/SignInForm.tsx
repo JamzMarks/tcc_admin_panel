@@ -6,9 +6,11 @@ import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AuthClient } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 
 export const SignInForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -23,35 +25,13 @@ export const SignInForm = () => {
   const onSubmit: SubmitHandler<LoginDto> = async (data) => {
     setServerError(null);
     try {
-        const res = await AuthClient.Login(data);
-        
-    } catch (error) {
-        
+        await AuthClient.Login(data);
+        router.push("/admin"); 
+    } catch (error: unknown) {
+       setServerError("Invalid credentials");
+    } finally {
+      reset({ password: "" });
     }
-    // try {
-    //   const res = await signIn("credentials", {
-    //     email: data.email,
-    //     password: data.password,
-    //     redirect: false,
-    //   });
-
-    //   if (res?.error) {
-    //     if (res.error === "CredentialsSignin") {
-    //       setError("password", {
-    //         type: "manual",
-    //         message: "Email ou senha incorretos",
-    //       });
-    //     } else {
-    //       setServerError("Erro no servidor. Tente novamente mais tarde.");
-    //     }
-    //   } else {
-    //     window.location.href = "/admin";
-    //   }
-    // } catch {
-    //   setServerError("Servidor indisponível. Verifique sua conexão.");
-    // }
-
-    reset({ password: "" });
   };
 
   return (

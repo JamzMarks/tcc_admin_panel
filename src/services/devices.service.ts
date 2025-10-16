@@ -32,7 +32,6 @@ class DevicesService {
   ): Promise<ApiResponse<Semaforo[]>> {
     const queryString = buildQuery(filters);
     const url = queryString ? `semaforo?${queryString}` : "semaforo";
-
     return await apiFetch(this.BASE_URL, url, {
       method: "GET",
     });

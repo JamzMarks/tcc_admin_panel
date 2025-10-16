@@ -25,9 +25,9 @@ export const TrafficLightFilters = ({ onFilter, filters }: TrafficLightFiltersPr
   const resetFilters = () => {
     const reset: SemaforoFilters = {
       query: null,
-      status: null,
+      isActive: null,
       pack: null,
-      subpack: null,
+      subPack: null,
     };
     onFilter(reset);
   };
@@ -57,10 +57,10 @@ export const TrafficLightFilters = ({ onFilter, filters }: TrafficLightFiltersPr
         <Input
           type="number"
           min="0"
-          value={filters.subpack ?? ""}
+          value={filters.subPack ?? ""}
           onChange={(e) =>
             handleChange(
-              "subpack",
+              "subPack",
               e.target.value ? Number(e.target.value) : null
             )
           }
@@ -71,7 +71,7 @@ export const TrafficLightFilters = ({ onFilter, filters }: TrafficLightFiltersPr
           description={t("filters.Combobox.Description")}
           filters={filters}
           setFilters={onFilter}
-          field={"status"}    
+          field={"isActive"}    
           
         />
         <button

@@ -2,10 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 import { UserModal } from "../modals/UserModal";
 import { UserButton } from "./UserButton";
+import { useUser } from "@/context/user-context";
 
 
 export const UserMenu = () => {
   // const session = useSession()
+  const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -32,7 +34,7 @@ export const UserMenu = () => {
     <>
       <div className="flex items-center align-middle gap-2 text-sm cursor-pointer">
         <button onClick={handleModal}>
-          <UserButton username={ 'Name'} />
+          <UserButton username={user?.firstName ? `${user.firstName + ' ' + user.lastName} `: 'User name'} />
         </button>
       </div>
       {isOpen && (

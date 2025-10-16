@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Trash2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Input } from "../input";
 
 type DeleteConfirmationModalProps = {
   resourceName: string;
@@ -78,14 +79,14 @@ export const DeleteConfirmationModal = ({
           {t.rich("confirmationMessage", {
             resource: confirmationText,
             object: () => (
-              <span className="capitalize font-medium">
+              <span className=" font-bold">
                 {confirmationText}
               </span>
             ),
           })}
         </p>
 
-        <input
+        <Input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}

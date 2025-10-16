@@ -6,19 +6,13 @@ export const Nav = () => {
       <h1 className="text-xl font-bold text-gray-800">TailFox Admin</h1>
       <div className="space-x-4">
         <Link
-          href="/"
-          className="text-gray-600 hover:text-primary transition-colors"
-        >
-          Home
-        </Link>
-        <Link
           href="/termos"
           className="text-gray-600 hover:text-primary transition-colors"
         >
           Termos
         </Link>
         <Link
-          href="/login"
+          href="/"
           className="text-gray-600 hover:text-primary transition-colors"
         >
           Login

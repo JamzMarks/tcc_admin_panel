@@ -4,7 +4,8 @@ import { GraphFilters } from "./modal/GraphFilter";
 import { NodePanelWrapper } from "./NodePanelWrapper";
 import GraphRender from "./GraphRender";
 import { GraphClient } from "@/services/graphService.service";
-import { Graph as GraphType } from "@/types/graph/graph.type";
+import { Graph as GraphType, WayWithNodes } from "@/types/graph/graph.type";
+import GraphRender2 from "./GraphRender2";
 export type selectedItem = {
   type: "node" | "edge";
   data: unknown;
@@ -13,15 +14,32 @@ export type selectedItem = {
 export const GraphWrapper = () => {
     const [selectedItem, setSelectedItem] = useState<null | selectedItem>(null);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [graphData, setGraphData] = useState<GraphType>({
+    // const [graphData, setGraphData] = useState<GraphType>({
+    //   nodes: [],
+    //   relationships: [],
+    // });
+
+    const [graphData, setGraphData] = useState<WayWithNodes>({
       nodes: [],
       relationships: [],
     });
     
-  useEffect(() => {
+  // useEffect(() => {
+  //     async function getMap(): Promise<void> {
+  //       try {
+  //         const data = await GraphClient.GetGraphMap();
+  //         setGraphData(data);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //     getMap();
+  //   }, []);
+
+     useEffect(() => {
       async function getMap(): Promise<void> {
         try {
-          const data = await GraphClient.GetGraphMap();
+          const data = await GraphClient.GetGraphWayMap();
           setGraphData(data);
         } catch (error) {
           console.log(error);
@@ -48,7 +66,8 @@ export const GraphWrapper = () => {
           setSelectedItem={setSelectedItem}
         />
       </div>
-      <GraphRender graphData={graphData} setSelectedItem={setSelectedItem} />
+      {/* <GraphRender graphData={graphData} setSelectedItem={setSelectedItem} /> */}
+      <GraphRender2  graphData={graphData} setSelectedItem={setSelectedItem}/>
     </div>
   );
 };

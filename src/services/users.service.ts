@@ -3,6 +3,7 @@ import { apiFetch } from "@/lib/api/client";
 import { ApiResponse } from "@/types/interfaces/apiResponse";
 import { UserFilter } from "@/types/user/user-filters.type";
 import { CreateUserDto, User, UserDto } from "@/types/user/user.type";
+import { buildQuery } from "@/utils/queryBuild";
 
 class UsersService {
   public BASE_URL: string
@@ -10,8 +11,10 @@ class UsersService {
     this.BASE_URL = process.env.AUTH_API_URL || "https://localhost:4000/api/v1";
   }
   public async GetUsers(filters: UserFilter): Promise<ApiResponse<UserDto[]>> {
-    console.log(filters)
-    return await apiFetch(this.BASE_URL,"/users", {
+    const queryString = buildQuery(filters);
+    const url = queryString ? `/users?${queryString}` : "/users";
+    console.log(url)
+    return await apiFetch(this.BASE_URL,url, {
       method: "GET",
     });
   }

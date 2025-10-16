@@ -3,35 +3,18 @@
 import { DeleteConfirmationModal } from "@/components/ui/modal/DeleteConfirmationModal";
 import { SectionWithHeader } from "@/components/ui/sections/SimpleSection";
 import { User, Mail, Calendar, Key, Trash } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { UpdateEmailModal } from "./modal/UpdateEmailModal";
 import { UpdatePasswordModal } from "./modal/UpdatePasswordModal";
-import { useSession } from "next-auth/react";
-import { get } from "http";
-import { UsersClient } from "@/services/users.service";
-import { UserDto } from "@/types/user/user.type";
+import { useUser } from "@/context/user-context";
 
 export const AccountSection = () => {
   const t = useTranslations("Settings.AccountSection");
-
-  const session = useSession().data?.user;
-  const [user, setUser] = useState<UserDto | null>(null);
-
-  useEffect(() => {
-  async function getUser() {
-    if (!session?.id) return; 
-    const res = await UsersClient.GetUsersById(session.id);
-    setUser(res.data);
-    console.log(res.data);
-  }
-
-  getUser();
-}, [session?.id]);
+  const {user} = useUser();
 
   const [email, setEmail] = useState("user@example.com");
   const createdAt = "2024-01-15";
-  const userId = "usr_1234567890";
 
   const [isDeleteOpen, setDeleteOpen] = useState(false);
   const [isPasswordOpen, setPasswordOpen] = useState(false);
@@ -41,7 +24,7 @@ export const AccountSection = () => {
     alert(t("delete.successMock"));
   };
 
-
+  console.log(user)
 
 
   return (
@@ -55,10 +38,10 @@ export const AccountSection = () => {
               {t("email.label")}
             </span>
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">{email}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{user?.email}</p>
           <button
             onClick={() => setEmailOpen(true)}
-            className="text-sm text-blue-600 hover:underline font-medium"
+            className="text-sm hover:underline font-medium cursor-pointer text-primary "
           >
             {t("email.changeButton")}
           </button>
@@ -77,7 +60,7 @@ export const AccountSection = () => {
           </p>
           <button
             onClick={() => setPasswordOpen(true)}
-            className="text-sm text-blue-600 hover:underline font-medium"
+            className="text-sm hover:underline font-medium cursor-pointer text-primary"
           >
             {t("password.changeButton")}
           </button>
@@ -89,7 +72,7 @@ export const AccountSection = () => {
           <User className="w-4 h-4 text-gray-500" />
           <p>
             <span className="font-semibold">{t("metadata.userId")}:</span>{" "}
-            {userId}
+            {user?.id}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -101,7 +84,7 @@ export const AccountSection = () => {
         </div>
       </div>
 
-      <div className="pt-6 border-t border-gray-100 mt-6">
+      <div className="pt-6 border-t mt-6">
         <button
           onClick={() => setDeleteOpen(true)}
           className="flex items-center gap-2 text-red-600 text-sm hover:underline font-medium cursor-pointer"
@@ -129,10 +112,10 @@ export const AccountSection = () => {
 
       <DeleteConfirmationModal
         resourceName={t("delete.resourceName")}
-        data={email}
+        data={user?.email}
         isOpen={isDeleteOpen}
         onClose={() => setDeleteOpen(false)}
-        confirmationText={email}
+        confirmationText={user?.email}
         onConfirm={handleDelete}
       />
     </SectionWithHeader>
