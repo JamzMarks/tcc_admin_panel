@@ -53,6 +53,7 @@ const DataRenderer = ({ data }: { data: any }) => {
 
 export const NodeMenu = ({ selectedItem, setSelectedItem }: NodeMenuProps) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [semaforoFormOpen, setSemaforoFormOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -84,6 +85,12 @@ export const NodeMenu = ({ selectedItem, setSelectedItem }: NodeMenuProps) => {
               onClick={() => setModalOpen(true)}
             >
               ClearWayNode
+            </Button>
+            <Button
+              className="bg-primary outline-0 m-4 cursor-pointer hover:bg-orange-600"
+              onClick={() => setSemaforoFormOpen(true)}
+            >
+              Vincular Semáforo
             </Button>
           </div>
         </SheetContent>

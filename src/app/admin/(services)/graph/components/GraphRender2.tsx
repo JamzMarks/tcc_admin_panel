@@ -65,7 +65,6 @@ const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
 
     graphData.nodes.forEach((n) => {
       if (n.properties) {
-        const wayId = n.properties.id?.low;
         const color = getNodeColor(n.properties);
         n.nodes.forEach((element) => {
           try {
@@ -74,7 +73,7 @@ const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
               label:  nodeLabel,
               tags: {
                 ...element.tags,
-                wayId: wayId,
+                nodeId: element.id,
                 wayProps: {
                   ...n.properties,
                 },
