@@ -5,31 +5,29 @@ import { Graph, WayWithNodes } from "@/types/graph/graph.type";
 // import qs from "query-string";
 
 class GraphService {
-  private BASE_URL: string;
-  constructor() {
-    this.BASE_URL = "http://localhost:3005/api/v1/graph/";
-  }
+
+  constructor() {}
 
   public async GetGraphMap(): Promise<Graph>{
-    return await apiFetch(this.BASE_URL, 'export/json', {
+    return await apiFetch('dv/export/json', {
       method: "GET"
     });
   }
 
   public async GetGraphWayMap(): Promise<WayWithNodes>{
-    return await apiFetch(this.BASE_URL, 'full-graph', {
+    return await apiFetch('dv/full-graph', {
       method: "GET"
     });
   }
 
   public async GetGraphWays(): Promise<Graph>{
-    return await apiFetch(this.BASE_URL, 'ways', {
+    return await apiFetch('dv/ways', {
       method: "GET"
     });
   }
 
   public async ClearWayNode(wayId: string): Promise<Graph>{
-    return await apiFetch(this.BASE_URL, `clear/${wayId}`, {
+    return await apiFetch(`dv/clear/${wayId}`, {
       method: "POST"
     });
   }

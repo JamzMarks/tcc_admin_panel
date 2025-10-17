@@ -5,10 +5,7 @@ import { ApiResponse } from "@/types/interfaces/apiResponse";
 import { buildQuery } from "@/utils/queryBuild";
 
 class DevicesService {
-  public BASE_URL: string;
-  constructor() {
-    this.BASE_URL = "http://localhost:3005/api/v1/";
-  }
+  constructor() {}
 
   async trafficLightTester() {
     const eventSource = new EventSource(
@@ -22,7 +19,7 @@ class DevicesService {
   public async GetCameras(
     filters: DeviceFilters
   ): Promise<ApiResponse<Camera[]>> {
-    return await apiFetch(this.BASE_URL, "camera", {
+    return await apiFetch("dv/camera", {
       method: "GET",
     });
   }
@@ -31,14 +28,14 @@ class DevicesService {
     filters: SemaforoFilters
   ): Promise<ApiResponse<Semaforo[]>> {
     const queryString = buildQuery(filters);
-    const url = queryString ? `semaforo?${queryString}` : "semaforo";
-    return await apiFetch(this.BASE_URL, url, {
+    const url = queryString ? `dv/semaforo?${queryString}` : "dv/semaforo";
+    return await apiFetch(url, {
       method: "GET",
     });
   }
 
   public async CreateTrafficLight(createUserDto: CreateSemaforo): Promise<ApiResponse<Semaforo[]>>{
-    return await apiFetch(this.BASE_URL, 'semaforo', {
+    return await apiFetch('dv/semaforo', {
       method: "POST",
       body:  JSON.stringify(createUserDto)
     });

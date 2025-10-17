@@ -11,7 +11,7 @@ import { CameraFilters } from "./CameraFilters";
 export default function CamerasTable() {
   const [filters, setFilters] = useState<DeviceFilters>({
     query: null,
-    status: null,
+    isActive: null,
   });
 
   const { data, isLoading, isError } = useQuery({
