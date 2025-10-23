@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { GraphFilters } from "./modal/GraphFilter";
 import { NodePanelWrapper } from "./NodePanelWrapper";
-import GraphRender from "./GraphRender";
+// import GraphRender from "./GraphRender";
 import { GraphClient } from "@/services/graphService.service";
 import { Graph as GraphType, WayWithNodes } from "@/types/graph/graph.type";
 import GraphRender2 from "./GraphRender2";

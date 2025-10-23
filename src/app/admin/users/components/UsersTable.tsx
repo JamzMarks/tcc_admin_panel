@@ -20,7 +20,7 @@ export default function UsersTable() {
   const [filters, setFilters] = useState<UserFilter>({
     query: null,
     role: null,
-    status: null,
+    isActive: null,
   });
 
   const { data, isLoading, isError } = useQuery({

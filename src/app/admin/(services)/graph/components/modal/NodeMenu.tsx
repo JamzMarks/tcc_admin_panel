@@ -6,7 +6,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { selectedItem } from "../GraphRender";
+import { selectedItem } from "../GraphRender2";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { GraphClient } from "@/services/graphService.service";
