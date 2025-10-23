@@ -87,7 +87,24 @@
       }
     },
     "microservices": {
-      "title": "Microservices"
+      "title": "Microservices",
+      "items": [
+        {
+          "title": "Administration MS",
+          "description": "Authentication & authorization microservice. Handles user login, roles, permissions, and security policies.",
+          "href": "#"
+        },
+        {
+          "title": "Operation MS",
+          "description": "Business operations API for workflows. Manages tasks, processes, and operational data within the system.",
+          "href": "#"
+        },
+        {
+          "title": "Metrics MS",
+          "description": "Monitoring & metrics API for system health. Collects performance data, usage statistics, and system alerts.",
+          "href": "#"
+        }
+      ]
     }
   },
   "UsersPage": {

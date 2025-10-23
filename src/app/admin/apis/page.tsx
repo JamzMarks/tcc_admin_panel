@@ -46,7 +46,7 @@ const ApisPage = () => {
             {t('repositories.description')}
             <div className="mt-4">
               <Button variant="outline" asChild>
-                <a href="https://github.com/JamzMarks/TCC" target="_blank">{t('repositories.button')}</a>
+                <a href="https://github.com/JamzMarks/tailfox" target="_blank">{t('repositories.button')}</a>
               </Button>
             </div>
           </CardContent>

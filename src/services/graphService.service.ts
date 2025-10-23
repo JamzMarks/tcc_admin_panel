@@ -9,25 +9,25 @@ class GraphService {
   constructor() {}
 
   public async GetGraphMap(): Promise<Graph>{
-    return await apiFetch('dv/export/json', {
+    return await apiFetch('dv/graph/export/json', {
       method: "GET"
     });
   }
 
   public async GetGraphWayMap(): Promise<WayWithNodes>{
-    return await apiFetch('dv/full-graph', {
+    return await apiFetch('dv/graph/full-graph', {
       method: "GET"
     });
   }
 
   public async GetGraphWays(): Promise<Graph>{
-    return await apiFetch('dv/ways', {
+    return await apiFetch('dv/graph/ways', {
       method: "GET"
     });
   }
 
   public async ClearWayNode(wayId: string): Promise<Graph>{
-    return await apiFetch(`dv/clear/${wayId}`, {
+    return await apiFetch(`dv/graph/clear/${wayId}`, {
       method: "POST"
     });
   }

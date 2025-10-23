@@ -1,9 +1,13 @@
+
+export async function apiFetch<T>(path: string, options: RequestInit): Promise<T>;
+export async function apiFetch<T>(path: string, options: RequestInit, baseUrl: string): Promise<T>;
 export async function apiFetch<T>(
   path: string,
   options?: RequestInit,
+  baseUrl?: string
 ): Promise<T>{
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-    const res = await fetch(`${baseUrl}${path}`, {
+    const url = `${baseUrl || process.env.NEXT_PUBLIC_API_URL}`;
+    const res = await fetch(`${url}${path}`, {
       ...options,
       headers: {
         ...(options?.method && options.method !== "GET"
