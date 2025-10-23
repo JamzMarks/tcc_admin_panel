@@ -21,31 +21,31 @@ type Service = {
   icon: LucideIcon;
 };
 
-const services: Service[] = [
-  {
-    title: "Administration MS",
-    description: "Authentication & authorization microservice",
-    href: "#",
-    icon: Shield,
-  },
-  {
-    title: "Operation MS",
-    description: "Business operations API for workflows",
-    href: "#",
-    icon: Activity,
-  },
-  {
-    title: "Metrics MS",
-    description: "Monitoring & metrics API for system health",
-    href: "#",
-    icon: BarChart3,
-  },
-];
+
 
 const MSServices = () => {
   const t = useTranslations('Apis.microservices')
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-
+  const services: Service[] = [
+    {
+      title: t('items.0.title'),
+      description: t('items.0.description'),
+      href: "#",
+      icon: Shield,
+    },
+    {
+      title: t('items.1.title'),
+      description: t('items.1.description'),
+      href: "#",
+      icon: Activity,
+    },
+    {
+      title: t('items.2.title'),
+      description: t('items.2.description'),
+      href: "#",
+      icon: BarChart3,
+    },
+  ]
   return (
     <SectionWithHeader title={t('title')} Icon={Server}>
 

@@ -15,41 +15,46 @@ interface GraphRenderProps {
 
 function getNodeColor(props: any): string {
   switch (true) {
+    case props?.highway === undefined:
+      return "pink";
+    case props?.highway === `service`:
+      return "green";
     case props?.access === "private":
       return "green";
-    case props?.highway === "service":
-        return 'pink'
+    
+    // case props?.highway === "service":
+    //     return 'pink'
     
 
-    case props?.type === "traffic_light":
-      return "orange";
+    // case props?.type === "traffic_light":
+    //   return "orange";
 
-    case props?.highway === "residential":
-      return "dodgerblue";
+    // case props?.highway === "residential":
+    //   return "dodgerblue";
 
-    case props?.highway === "primary":
-      return "orange";
+    // case props?.highway === "primary":
+    //   return "orange";
 
-    case props?.highway === "secondary":
-      return "orange";
+    // case props?.highway === "secondary":
+    //   return "orange";
 
-    case props?.highway === "tertiary":
-      return "orange";
+    // case props?.highway === "tertiary":
+    //   return "orange";
 
-    case props?.service === "parking_aisle":
-      return "gray";
+    // case props?.service === "parking_aisle":
+    //   return "gray";
 
-    case props?.name: // tem nome definido
-      return "blue";
+    // case props?.name: // tem nome definido
+    //   return "blue";
 
     
     default:
         if(props.name || props.destination){
-            return "blue";
+            return "dodgerblue";
         }else if(/link/i.test(props.highway)){
             return "orange";
         }else{
-            return "red"; // fallback padrão
+            return "yellow"; // fallback padrão
         }
   }
 }
