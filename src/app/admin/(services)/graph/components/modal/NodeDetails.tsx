@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Dispatch, SetStateAction } from "react";
-import { selectedItem } from "../GraphRender";
+import { selectedItem } from "../GraphRender2";
 
 interface NodeDetails {
     selectedItem: selectedItem | null,

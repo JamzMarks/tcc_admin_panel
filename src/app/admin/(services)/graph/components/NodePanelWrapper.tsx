@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, SetStateAction, Dispatch } from "react";
-import { selectedItem } from "./GraphRender";
+import { selectedItem } from "./GraphRender2";
 import { NodeMenu } from "./modal/NodeMenu";
 
 export const NodePanelWrapper = ({

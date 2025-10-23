@@ -6,7 +6,7 @@ import Sigma from "sigma";
 
 export type selectedItem = {
   type: "node" | "edge";
-  data: unknown;
+  data: any;
 };
 interface GraphRenderProps {
   graphData: WayWithNodes;
