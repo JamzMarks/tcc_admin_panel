@@ -15,3 +15,9 @@ export type UserConfigDto = {
   language: Language;
   theme: Theme;
 }
+
+export type UpdateUserConfigDto = {
+  userId: string;
+  language?: Language;
+  theme?: Theme;
+}

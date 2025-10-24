@@ -16,13 +16,13 @@ export async function middleware(req: NextRequest) {
     if (!accessToken) {
       if (refreshToken) {
         try {
-          const res = await fetch(`${process.env.AUTH_API_URL}auth/refresh`, {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}ad/auth/refresh`, {
             method: "POST",
             headers: {
               Cookie: `refresh_token=${refreshToken}`,
             },
           });
-
+          console.log(res)
           if (res.ok) {
             const setCookie = res.headers.get("set-cookie");
             const response = NextResponse.next();

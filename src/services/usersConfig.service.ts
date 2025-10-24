@@ -2,37 +2,30 @@
 
 import { apiFetch } from "@/lib/api/client";
 import { ApiResponse } from "@/types/interfaces/apiResponse";
-import { UserConfigDto } from "@/types/user/config/user-config.dto";
-import { UserFilter } from "@/types/user/user-filters.type";
-import { CreateUserDto, User, UserDto } from "@/types/user/user.type";
+import { UpdateUserConfigDto, UserConfigDto } from "@/types/user/config/user-config.dto";
 
 class UsersConfigService {
   constructor(){}
-  public async GetUsers(filters: UserFilter): Promise<ApiResponse<User[]>> {
-    console.log(filters)
-    return await apiFetch("ad/users", {
-      method: "GET",
-    });
-  }
-
-  public async CreateUser(createUserDto: CreateUserDto): Promise<ApiResponse<UserDto>>{
-    return await apiFetch("ad/users", {
-      method: "POST",
-      body:  JSON.stringify(createUserDto)
-    })
-  }
 
   public async GetUserConfigByUser(userId: string): Promise<ApiResponse<UserConfigDto>>{
-    return await apiFetch(`ad/users/u/${userId}`, {
+    return await apiFetch(`ad/Users-config/u/${userId}`, {
       method: "GET",
     })
   }
 
-  public async UpdateUserConfig(userId: string): Promise<ApiResponse<UserConfigDto>>{
-    return await apiFetch(`ad/users/u/${userId}`, {
+  public async UpdateUserConfig(userConfig: UpdateUserConfigDto): Promise<ApiResponse<UserConfigDto>>{
+    return await apiFetch(`ad/Users-config/${userConfig.userId}/config`, {
+      method: "PATCH",
+      body:  JSON.stringify(userConfig)
+    })
+  }
+
+  public async GetMyConfigs(): Promise<ApiResponse<UserConfigDto>>{
+    return await apiFetch('ad/Users-config/me', {
       method: "GET",
     })
   }
+
 }
 
 export const UsersConfigClient = new UsersConfigService();

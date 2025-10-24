@@ -27,6 +27,22 @@
     "dark": "Switch to dark theme"
   },
   "Settings": {
+    "PreferencesSection": {
+      "title": "Preferences",
+      "language": "Language",
+      "languageDescription": "Choose the language you prefer to use across the platform.",
+      "languageInputDescription": "Switch language.",
+      "languagePlaceholder": "Select a language...",
+      "theme": "Theme",
+      "themeDescription": "Switch light and dark mode for a personalized experience.",
+      "themeInputDescription": "Switch theme.",
+      "themePlaceholder": "Select a theme...",
+      "currentPreferences": "Current Preferences",
+      "selectedLanguage": "Selected language",
+      "selectedTheme": "Selected theme",
+      "note": "Your preferences are saved locally and can be updated anytime.",
+      "saveButton": "Save Preferences"
+    },
     "AccountSection": {
       "title": "Account",
       "email": {

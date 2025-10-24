@@ -70,10 +70,6 @@ export const DashboardSidebar = () => {
             </LinkItem>
           </DarshBoardFunctions>
           <DarshBoardFunctions title={"Services"}>
-            <LinkItem linkTo="/admin/devices">
-              <Video />
-              {t("Devices")}
-            </LinkItem>
             <LinkItem linkTo="/admin/packs">
               <Boxes />
               {t("Packs")}
