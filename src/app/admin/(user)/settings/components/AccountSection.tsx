@@ -23,10 +23,6 @@ export const AccountSection = () => {
   const handleDelete = () => {
     alert(t("delete.successMock"));
   };
-
-  console.log(user)
-
-
   return (
     <SectionWithHeader title={t("title")} Icon={User}>
       {/* Email */}
@@ -98,7 +94,6 @@ export const AccountSection = () => {
       <UpdatePasswordModal
         isOpen={isPasswordOpen}
         onClose={() => setPasswordOpen(false)}
-        onConfirm={(newPassword) => alert("Password updated: " + newPassword)}
       />
 
       <UpdateEmailModal
@@ -118,6 +113,7 @@ export const AccountSection = () => {
         confirmationText={user?.email}
         onConfirm={handleDelete}
       />
+      
     </SectionWithHeader>
   );
 };

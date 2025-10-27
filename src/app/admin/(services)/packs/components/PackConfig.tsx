@@ -6,7 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
-export const PackConfig = () => {
+
+interface PackConfigProps {
+  name: string;
+  cicle: number;
+  onNameChange: (value: string) => void;
+  onCicleChange: (value: number) => void;
+}
+
+export const PackConfig = ({name, cicle, onNameChange, onCicleChange}: PackConfigProps) => {
   const [maxTime, setMaxTime] = useState<number | "">(60);
   const [cycleTime, setCycleTime] = useState<number | "">(120);
 
@@ -18,33 +26,26 @@ export const PackConfig = () => {
   return (
     <>
       <div className="space-y-4">
-        <div className="flex flex-col">
-          <Label htmlFor="maxTime">Tempo máximo do pacote (segundos)</Label>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="maxTime">Nome do Pack</Label>
           <Input
-            id="maxTime"
-            type="number"
-            value={maxTime}
-            onChange={(e) =>
-              setMaxTime(e.target.value === "" ? "" : parseInt(e.target.value))
-            }
+            value={name}
+            onChange={(e) => onNameChange(e.target.value)}
+            placeholder="Ex: Pack Principal"
           />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-2">
           <Label htmlFor="cycleTime">Tempo de ciclo total (segundos)</Label>
           <Input
-            id="cycleTime"
             type="number"
-            value={cycleTime}
-            onChange={(e) =>
-              setCycleTime(
-                e.target.value === "" ? "" : parseInt(e.target.value)
-              )
-            }
+            value={cicle}
+            onChange={(e) => onCicleChange(Number(e.target.value))}
+            placeholder="0"
           />
         </div>
 
-        <Button onClick={handleSave}>Salvar Configurações</Button>
+        <Button onClick={handleSave} className="text-gray-200">Salvar Configurações</Button>
       </div>
     </>
   );

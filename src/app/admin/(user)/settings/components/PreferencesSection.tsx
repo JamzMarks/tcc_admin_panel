@@ -9,10 +9,13 @@ import { useTranslations } from "next-intl";
 import { Language, Theme, UpdateUserConfigDto, UserConfigDto } from "@/types/user/config/user-config.dto";
 import { useEffect, useState } from "react";
 import { UsersConfigClient } from "@/services/usersConfig.service";
+import HttpModal from "@/components/ui/modal/HttpModal";
 
 export const PreferencesSection = () => {
   const t = useTranslations("Settings.PreferencesSection");
   const [myConfigs, setMyConfigs] = useState<UserConfigDto | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalConfig, setModalConfig] = useState<{ message: string; type?: 'error' | 'success' | 'confirm'; onConfirm?: () => void }>({ message: '' });
 
   const { handleSubmit, control, watch, reset } = useForm<UpdateUserConfigDto>({
     defaultValues: {
@@ -46,8 +49,11 @@ export const PreferencesSection = () => {
   const onSubmit = async (data: UpdateUserConfigDto) => {
     try {
       await UsersConfigClient.UpdateUserConfig(data);
-
-    } catch (error) {
+      setModalConfig({ message: 'Operação realizada com sucesso!', type: 'success' });
+      setModalOpen(true);
+    } catch (error: any) {
+      setModalConfig({ message: error.message || 'Erro inesperado', type: 'error' });
+      setModalOpen(true);
       console.log(error)
     }
   };
@@ -140,6 +146,14 @@ export const PreferencesSection = () => {
           </div>
         </div>
       </form>
+      <HttpModal
+        isOpen={modalOpen}
+        message={modalConfig.message}
+        type={modalConfig.type}
+        onClose={() => setModalOpen(false)}
+        onConfirm={modalConfig.onConfirm}
+      />
+      
     </SectionWithHeader>
   );
 };

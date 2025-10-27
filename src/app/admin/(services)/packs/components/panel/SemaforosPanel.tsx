@@ -1,80 +1,144 @@
-// components/SemaforoPanel.tsx
 "use client";
 
 import { SemaforoDto } from "@/types/devices/semaforo/semaforoDto.type";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SemaforoCard from "../cards/SemaforoCard";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { RefreshCcw, CheckCircle } from "lucide-react";
+import { DevicesClient } from "@/services/devices.service";
 
+interface SemaforoPanelProps {
+  handleRefresh: (selected: SemaforoDto[]) => void;
+  onConfirm: (selected: SemaforoDto[]) => void;
+}
 
-// Mock de semáforos
-const MOCK_SEMAFOROS: SemaforoDto[] = [
-  { id: 1, deviceId: "TL-001", macAddress: "AA:BB:CC:01", ip: "192.168.0.1", deviceKey: "key1", isActive: true },
-  { id: 2, deviceId: "TL-002", macAddress: "AA:BB:CC:02", ip: "192.168.0.2", deviceKey: "key2", isActive: false },
-  { id: 3, deviceId: "TL-003", macAddress: "AA:BB:CC:03", ip: "192.168.0.3", deviceKey: "key3", isActive: true },
-];
-
-const SemaforoPanel: React.FC = () => {
+export const SemaforoPanel = ({ handleRefresh, onConfirm }: SemaforoPanelProps) => {
   const [search, setSearch] = useState("");
-  const [results, setResults] = useState<SemaforoDto[]>([]);
   const [selected, setSelected] = useState<SemaforoDto[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [semaforos, setSemaforos] = useState<SemaforoDto[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Mock da request
-  const handleSearch = () => {
-    const filtered = MOCK_SEMAFOROS.filter(
-      (s) =>
-        s.deviceId.toLowerCase().includes(search.toLowerCase()) &&
-        !selected.some(sel => sel.id === s.id) // remove duplicados
-    );
-    setResults(filtered);
-  };
+  useEffect(() => {
+    const fetchSemaforos = async () => {
+      if (search.trim().length < 2) {
+        setSemaforos([]);
+        return;
+      }
 
-  const addToSelected = (semaforo: SemaforoDto) => {
+      try {
+        setLoading(true);
+        const res = await DevicesClient.GetTrafficLight({
+          query: search,
+          isActive: null,
+          pack: null,
+          subPack: null,
+        });
+        setSemaforos(res.data || []);
+      } catch (error) {
+        console.error("Erro ao buscar semáforos:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const delayDebounce = setTimeout(fetchSemaforos, 400); // debounce de 400ms
+    return () => clearTimeout(delayDebounce);
+  }, [search]);
+
+  const filtered = semaforos.filter(
+    (s) => !selected.some((sel) => sel.id === s.id)
+  );
+
+  const handleSelect = (semaforo: SemaforoDto) => {
     setSelected((prev) => [...prev, semaforo]);
-    setResults((prev) => prev.filter((s) => s.id !== semaforo.id));
+    setSearch("");
+    setShowDropdown(false);
   };
 
   const removeFromSelected = (id?: number) => {
     if (!id) return;
-    const removed = selected.find(s => s.id === id);
-    setSelected((prev) => prev.filter(s => s.id !== id));
-    if (removed) setResults((prev) => [...prev, removed]);
+    setSelected((prev) => prev.filter((s) => s.id !== id));
+  };
+
+  const handleConfirmClick = () => {
+    onConfirm(selected);
+  };
+
+  const handleRefreshClick = () => {
+    handleRefresh(selected);
   };
 
   return (
-    <div className="p-4 border rounded shadow bg-gray-50">
-      <div className="flex gap-2 mb-4">
-        <input
+    <div className="relative p-4">
+      <div className="relative mb-4">
+        <Input
           type="text"
           placeholder="Buscar semáforo..."
-          className="border rounded px-2 py-1 flex-1"
+          className="border rounded px-3 py-2 w-full"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setShowDropdown(e.target.value.length > 0);
+          }}
+          onFocus={() => setShowDropdown(search.length > 0)}
         />
-        <button
-          onClick={handleSearch}
-          className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Buscar
-        </button>
-      </div>
 
-      <h4 className="font-semibold mb-2">Resultados</h4>
-      <div className="grid grid-cols-3 gap-2 mb-4">
-        {results.map((s) => (
-          <div key={s.id} onClick={() => addToSelected(s)}>
-            <SemaforoCard semaforo={s} />
-          </div>
-        ))}
+        {showDropdown && (
+          <ul className="absolute z-10 bg-white border rounded shadow-md mt-1 w-full max-h-48 overflow-auto">
+            {loading ? (
+              <li className="px-3 py-2 text-gray-500 italic">Buscando...</li>
+            ) : filtered.length > 0 ? (
+              filtered.map((s) => (
+                <li
+                  key={s.id}
+                  className="px-3 py-2 hover:bg-blue-100 cursor-pointer transition-colors"
+                  onClick={() => handleSelect(s)}
+                >
+                  {s.deviceId} — {s.ip}
+                </li>
+              ))
+            ) : (
+              <li className="px-3 py-2 text-gray-500 italic">
+                Nenhum resultado encontrado
+              </li>
+            )}
+          </ul>
+        )}
       </div>
 
       <h4 className="font-semibold mb-2">Selecionados</h4>
-      <div className="grid grid-cols-3 gap-2">
-        {selected.map((s) => (
-          <SemaforoCard key={s.id} semaforo={s} onRemove={removeFromSelected} />
-        ))}
+      <div className="flex flex-wrap gap-2">
+        {selected.length === 0 ? (
+          <p className="text-sm text-muted-foreground italic">
+            Busque os semáforos do pacote
+          </p>
+        ) : (
+          selected.map((s) => (
+            <SemaforoCard key={s.id} semaforo={s} onRemove={removeFromSelected} />
+          ))
+        )}
+      </div>
+
+      <div className="mt-6 flex gap-3">
+        <Button
+          variant="outline"
+          onClick={handleRefreshClick}
+          className="flex items-center gap-2 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+        >
+          <RefreshCcw className="w-4 h-4" />
+          Refresh
+        </Button>
+
+        <Button
+          onClick={handleConfirmClick}
+          className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white transition-colors"
+        >
+          <CheckCircle className="w-4 h-4" />
+          Confirmar
+        </Button>
       </div>
     </div>
   );
 };
-
-export default SemaforoPanel;

@@ -1,92 +1,26 @@
-// PackPanel.tsx
-import React, { useEffect, useRef, useState } from "react";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
+
+import React, { useState } from "react";
+import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Card, CardContent } from "@/components/ui/card";
+
 import { Button } from "@/components/ui/button";
-// import { SemaforoCard, SubPackCard } from "./types";
-export interface SemaforoCard {
-  id: number;
-  name: string;
+import { SemaforoDto } from "@/types/devices/semaforo/semaforoDto.type";
+import { MiniSemaforoCard, MiniSemaforoCardType } from "../cards/MiniSemaforoCard";
+import { SubPack, SubPackCard } from "../cards/SubPackCard";
+import { CheckCircle, CirclePlus } from "lucide-react";
+
+
+interface PackPanelProps {
+  semaforos: SemaforoDto[];
 }
 
-export interface SubPackCard {
-  id: number;
-  name: string;
-  semaforos: SemaforoCard[];
-}
-// Semáforo arrastável
+export const PackPanel = ({ semaforos }: PackPanelProps) => {
+  const [availableSemaforos, setAvailableSemaforos] =
+    useState<SemaforoDto[]>(semaforos);
 
-const Semaforo = ({ semaforo }: { semaforo: SemaforoCard }) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: "SEMAFORO",
-    item: semaforo,
-    collect: (monitor) => ({ isDragging: !!monitor.isDragging() }),
-  }));
+  const [subPacks, setSubPacks] = useState<SubPackCard[]>([]);
 
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (ref.current) drag(ref.current);
-  }, [drag]);
-
-  return (
-    <Card
-      ref={ref}
-      className={`p-2 m-1 cursor-move ${isDragging ? "opacity-50" : "opacity-100"}`}
-    >
-      <CardContent>{semaforo.name}</CardContent>
-    </Card>
-  );
-};
-
-// SubPack drop
-const SubPack = ({
-  subPack,
-  onDropSemaforo,
-}: {
-  subPack: SubPackCard;
-  onDropSemaforo: (semaforo: SemaforoCard, subPackId: number) => void;
-}) => {
-  const [, drop] = useDrop<SemaforoCard, void, unknown>({
-    accept: "SEMAFORO",
-    drop: (item) => onDropSemaforo(item, subPack.id),
-  });
-
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (ref.current) drop(ref.current);
-  }, [drop]);
-
-  return (
-    <Card ref={ref} className="p-2 m-2 border-2 border-dashed w-64 bg-gray-50">
-      <CardContent>
-        <h3 className="font-bold mb-2">{subPack.name}</h3>
-        <div className="flex flex-wrap">
-          {subPack.semaforos.map((s) => (
-            <Semaforo key={s.id} semaforo={s} />
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-// PackPanel principal
-export const PackPanel = () => {
-  const [availableSemaforos, setAvailableSemaforos] = useState<SemaforoCard[]>([
-    { id: 1, name: "Semáforo 1" },
-    { id: 2, name: "Semáforo 2" },
-    { id: 3, name: "Semáforo 3" },
-  ]);
-
-  const [subPacks, setSubPacks] = useState<SubPackCard[]>([
-    { id: 1, name: "SubPack A", semaforos: [] },
-    { id: 2, name: "SubPack B", semaforos: [] },
-  ]);
-
-  const handleDropSemaforo = (semaforo: SemaforoCard, subPackId: number) => {
+  const handleDropSemaforo = (semaforo: MiniSemaforoCardType, subPackId: number) => {
     setSubPacks((prev) =>
       prev.map((sp) =>
         sp.id === subPackId
@@ -108,23 +42,51 @@ export const PackPanel = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="flex gap-4">
-        {/* Painel de semáforos disponíveis */}
-        <div className="w-1/4 p-2 border rounded bg-gray-100">
+      <div className="flex gap-4 w-full">
+        <div className="w-1/4 p-2 ">
           <h2 className="font-bold mb-2">Semáforos disponíveis</h2>
-          {availableSemaforos.map((s) => (
-            <Semaforo key={s.id} semaforo={s} />
-          ))}
+          {semaforos.length === 0 ? (
+            <p className="text-sm text-muted-foreground italic">
+              Busque os semáforos do pacote
+            </p>
+          ) : (
+            semaforos.map((s) => (
+              <MiniSemaforoCard
+                key={s.id}
+                semaforo={{
+                  deviceId: s.deviceId,
+                  id: s.id,
+                  isActive: s.isActive || false,
+                }}
+              />
+            ))
+          )}
         </div>
 
-        {/* Painel de subpacks */}
-        <div className="w-3/4 p-2 border rounded bg-gray-50 flex flex-wrap">
-          <Button className="m-2" onClick={createSubPack}>
-            + Criar SubPack
-          </Button>
-          {subPacks.map((sp) => (
-            <SubPack key={sp.id} subPack={sp} onDropSemaforo={handleDropSemaforo} />
-          ))}
+        <div className=" p-2 w-full">
+          <h2 className="font-bold mb-2">Organização</h2>
+          <div className="border rounded-2xl w-full flex wrap min-h-10">
+            {subPacks.map((sp) => (
+              <SubPack
+                key={sp.id}
+                subPack={sp}
+                onDropSemaforo={handleDropSemaforo}
+              />
+            ))}
+          </div>
+          <div className="flex justify-end items-center">
+            <Button className="m-4" onClick={createSubPack}>
+              <CirclePlus />
+              Criar SubPack
+            </Button>
+            <Button
+              // onClick={handleConfirmClick} 
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white transition-colors"
+            >
+              <CheckCircle className="w-4 h-4" />
+              Confirmar
+            </Button>
+          </div>
         </div>
       </div>
     </DndProvider>

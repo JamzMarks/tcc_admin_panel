@@ -13,10 +13,6 @@ const CameraPage = () => {
             <PageTitle>
                 Camera
             </PageTitle>
-            <SectionWithHeader title="New Camera">
-                <p>Create a camera</p>
-                <CameraForm/>
-            </SectionWithHeader>
             <SectionWithHeader title="Registered Cameras" Icon={List}>
                 <CamerasTable/>
             </SectionWithHeader>
