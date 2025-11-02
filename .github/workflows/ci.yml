@@ -17,12 +17,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9  # ou a versão que você usa localmente
+          run_install: true  # automaticamente roda "pnpm install"
 
       - name: Build Next.js project
-        run: npm run build
-        env:
-          NEXT_PUBLIC_API_URL: http://localhost:3000/api
+        run: pnpm run build
