@@ -1,6 +1,7 @@
 import { apiFetch } from "@/lib/api/client";
 import { DeviceFilters, SemaforoFilters } from "@/types/devices/device.filters.type";
 import { Camera, CreateSemaforo, Semaforo } from "@/types/devices/devices.interface";
+import { SemaforoDto } from "@/types/devices/semaforo/semaforoDto.type";
 import { ApiResponse } from "@/types/interfaces/apiResponse";
 import { buildQuery } from "@/utils/queryBuild";
 
@@ -26,7 +27,7 @@ class DevicesService {
 
   public async GetTrafficLight(
     filters: SemaforoFilters
-  ): Promise<ApiResponse<Semaforo[]>> {
+  ): Promise<ApiResponse<SemaforoDto[]>> {
     const queryString = buildQuery(filters);
     const url = queryString ? `dv/semaforo?${queryString}` : "dv/semaforo";
     return await apiFetch(url, {

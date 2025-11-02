@@ -9,7 +9,7 @@ const GraphPage = () => {
     <div className="space-y-4">
         <PageTitle>Graph Map</PageTitle>
         <SectionWithHeader title="Graph Map">
-            <GraphDynamic/>
+          <GraphDynamic/>
         </SectionWithHeader>
     </div>
   )

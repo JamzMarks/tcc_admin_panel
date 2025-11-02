@@ -9,6 +9,7 @@ import { TrafficLightFilters } from "./TrafficLightFilters";
 import { TrafficLightButtonsActions } from "./TrafficLightButtonsActions";
 import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui/badge/StatusBadge";
+import { SemaforoDto } from "@/types/devices/semaforo/semaforoDto.type";
 
 export default function TrafficLightTable() {
   const t = useTranslations("Devices.TrafficLight");
@@ -18,17 +19,24 @@ export default function TrafficLightTable() {
     isActive: null,
     pack: null,
     subPack: null,
+    limit: 10,
+    page: null
   });
   const { data, isLoading, isError } = useQuery({
     queryKey: ["semaforo", filters],
     queryFn: () => DevicesClient.GetTrafficLight(filters),
   });
-  const semaforos: Semaforo[] = data?.data ?? [];
-
+  const semaforos: SemaforoDto[] = data?.data ?? [];
+  function changePage(page: number) {
+  setFilters((prev) => ({
+    ...prev,
+    page,
+  }));
+}
   return (
     <div className="space-y-4">
       <TrafficLightFilters onFilter={setFilters} filters={filters}/>
-      <BaseTable<Semaforo>
+      <BaseTable<SemaforoDto>
         columns={[
           { key: "deviceId", label: t("Table.device") },
           { key: "macAddress", label: t("Table.mac") },
@@ -87,6 +95,12 @@ export default function TrafficLightTable() {
         emptyMessage={t("notFound")}
         error={isError}
         loading={isLoading}
+        pagination={{
+          total: data?.total,
+          limit: data?.limit,
+          page: data?.page,
+          onPageChange: changePage
+        }}
       />
     </div>
   );

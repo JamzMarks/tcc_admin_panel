@@ -22,7 +22,6 @@ export const GraphFilters = ({
           <DialogTitle>Filtros</DialogTitle>
         </DialogHeader>
 
-        {/* Exemplo de filtros */}
         <div className="flex flex-col gap-2">
           <label className="text-sm">Tipo de nó</label>
           <select className="border p-2 rounded">

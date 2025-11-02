@@ -1,16 +1,23 @@
 "use client";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { Graph as GraphType, WayWithNodes } from "@/types/graph/graph.type";
+import {
+  DevicesRelations,
+  FNode,
+  Way,
+  WayWithNodes,
+} from "@/types/graph/graph.type";
 import Graph from "graphology";
 import Sigma from "sigma";
+import {
+  GraphNodeAttributes,
+  WayProperties,
+} from "@/types/graph/sigmaGraph.type";
+import { SelectedItem } from "./GraphWrapper";
 
-export type selectedItem = {
-  type: "node" | "edge";
-  data: any;
-};
+
 interface GraphRenderProps {
   graphData: WayWithNodes;
-  setSelectedItem: Dispatch<SetStateAction<selectedItem | null>>;
+  setSelectedItem: Dispatch<SetStateAction<SelectedItem | null>>;
 }
 
 function getNodeColor(props: any): string {
@@ -21,41 +28,15 @@ function getNodeColor(props: any): string {
       return "green";
     case props?.access === "private":
       return "green";
-    
-    // case props?.highway === "service":
-    //     return 'pink'
-    
 
-    // case props?.type === "traffic_light":
-    //   return "orange";
-
-    // case props?.highway === "residential":
-    //   return "dodgerblue";
-
-    // case props?.highway === "primary":
-    //   return "orange";
-
-    // case props?.highway === "secondary":
-    //   return "orange";
-
-    // case props?.highway === "tertiary":
-    //   return "orange";
-
-    // case props?.service === "parking_aisle":
-    //   return "gray";
-
-    // case props?.name: // tem nome definido
-    //   return "blue";
-
-    
     default:
-        if(props.name || props.destination){
-            return "dodgerblue";
-        }else if(/link/i.test(props.highway)){
-            return "orange";
-        }else{
-            return "yellow"; // fallback padrão
-        }
+      if (props.name || props.destination) {
+        return "orange";
+      } else if (/link/i.test(props.highway)) {
+        return "blue";
+      } else {
+        return "red";
+      }
   }
 }
 
@@ -68,62 +49,87 @@ const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
 
     const graph = new Graph();
 
-    graphData.nodes.forEach((n) => {
-      if (n.properties) {
-        const color = getNodeColor(n.properties);
-        n.nodes.forEach((element) => {
-          try {
-            const nodeLabel = `${n.properties.highway}`;
+    graphData.nodes.forEach((n: Way) => {
+      if (!n.properties) return;
+
+      const color = getNodeColor(n.properties);
+
+      n.nodes.forEach((element: FNode) => {
+        try {
+          const nodeLabel = `${n.properties?.highway || ""}`;
+
+          if (graph.hasNode(element.id)) {
+            const existingNode = graph.getNodeAttributes(
+              element.id
+            ) as GraphNodeAttributes;
+            const ways = existingNode.tags.ways || [];
+
+            const wayExists = ways.some(
+              (w: WayProperties) => w.wayId === n.properties!.wayId
+            );
+            const qtdWays = ways.length;
+
+            if (!wayExists) {
+              ways.push(n.properties as WayProperties);
+              graph.mergeNodeAttributes(element.id, {
+                tags: {
+                  quantidadeWays: qtdWays + 1,
+                  ...existingNode.tags,
+                },
+              });
+            }
+          } else {
             graph.addNode(element.id, {
-              label:  nodeLabel,
+              label: nodeLabel,
               tags: {
                 ...element.tags,
                 nodeId: element.id,
-                wayProps: {
-                  ...n.properties,
-                },
+                ways: [n.properties],
               },
               size: 2,
               x: element.lon,
               y: element.lat,
               color,
+            } as GraphNodeAttributes);
+          }
+        } catch (error) {
+          console.error("Erro ao adicionar nó:", error);
+        }
+      });
+    });
+    const devicesRelations: DevicesRelations[] = [];
+    graphData.relationships.forEach((r) => {
+      switch (r.type) {
+        case "CONNECTED_TO":
+          try {
+            graph.addEdge(r.startNodeId.toString(), r.endNodeId.toString(), {
+              label: r.type,
+              color: "gray",
             });
           } catch (error) {
+            console.error("Erro ao adicionar edge CONNECTED_TO", error);
           }
-        });
+          break;
+
+        case "HAS_SEMAFORO":
+        case "DEVICE_BETWEEN":
+          devicesRelations.push(r as DevicesRelations);
+          break;
+
+        default:
+          break;
       }
     });
 
-    // Adicionar arestas
-    graphData.relationships.forEach((r) => {
-      if (r.type == "CONNECTED_TO") {
-        try {
-          graph.addEdge(r.startNodeId.toString(), r.endNodeId.toString(), {
-            label: r.type,
-            color: "gray",
-          });
-        } catch (error) {
-        }
-      }
-    });
-
-    // Se já existe Sigma, limpar
     if (sigmaRef.current) {
       sigmaRef.current.kill();
     }
 
-    // Renderizar com Sigma
     sigmaRef.current = new Sigma(graph, containerRef.current);
 
-    // LISTENERS
     sigmaRef.current.on("clickNode", (e) => {
-      const node = graph.getNodeAttributes(e.node);
+      const node = graph.getNodeAttributes(e.node) as GraphNodeAttributes;
       setSelectedItem({ type: "node", data: node });
-    });
-
-    sigmaRef.current.on("clickEdge", (e) => {
-      const edge = graph.getEdgeAttributes(e.edge);
-      setSelectedItem({ type: "edge", data: edge });
     });
 
     sigmaRef.current.on("enterNode", (e) => {
@@ -140,7 +146,7 @@ const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
   }, [graphData]);
 
   return (
-    <div style={{ width: "100%", height: "800px" }} className="relative">
+    <div style={{ width: "100%", height: "70dvh" }} className="relative">
       <div style={{ width: "100%", height: "100%" }} ref={containerRef}></div>
     </div>
   );

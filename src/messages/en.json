@@ -27,6 +27,22 @@
     "dark": "Switch to dark theme"
   },
   "Settings": {
+    "PreferencesSection": {
+      "title": "Preferences",
+      "language": "Language",
+      "languageDescription": "Choose the language you prefer to use across the platform.",
+      "languageInputDescription": "Switch language.",
+      "languagePlaceholder": "Select a language...",
+      "theme": "Theme",
+      "themeDescription": "Switch light and dark mode for a personalized experience.",
+      "themeInputDescription": "Switch theme.",
+      "themePlaceholder": "Select a theme...",
+      "currentPreferences": "Current Preferences",
+      "selectedLanguage": "Selected language",
+      "selectedTheme": "Selected theme",
+      "note": "Your preferences are saved locally and can be updated anytime.",
+      "saveButton": "Save Preferences"
+    },
     "AccountSection": {
       "title": "Account",
       "email": {
@@ -202,15 +218,29 @@
   "Devices": {
     "Camera": {
       "resource": "cameras",
+      "notFound": "No cameras were found",
       "filters": {
         "title": "Camera Filters",
-
         "Combobox": {
           "Placeholder": "Select a status...",
           "Resource": "status",
           "Description": "Object status",
           "ActiveOption": "Active",
           "InactiveOption": "Inactive"
+        }
+      },
+      "Table": {
+        "status": "Status",
+        "device": "Device ID",
+        "mac": "MAC",
+        "ip": "IP Address",
+        "createAt": "Created at",
+        "notlinked": "Not linked",
+        "dateNot": "Date not informed",
+        "Actions": {
+          "actionsTable": "Actions",
+          "edit": "Edit camera",
+          "delete": "Delete camera"
         }
       }
     },
@@ -255,7 +285,8 @@
   "Badge": {
     "Status": {
       "active": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "unknown": "Not informed"
     }
   },
   "Modal": {

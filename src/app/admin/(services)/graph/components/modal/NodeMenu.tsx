@@ -1,23 +1,23 @@
 "use client";
-
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { selectedItem } from "../GraphRender2";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { GraphClient } from "@/services/graphService.service";
 import { RequestModal } from "@/components/ui/modal/RequestModal";
+import { SemaforoFormModal } from "./SemaforoFormModal";
+import { SelectedItem } from "../GraphWrapper";
 
 interface NodeMenuProps {
-  selectedItem: selectedItem | null;
-  setSelectedItem: Dispatch<SetStateAction<selectedItem | null>>;
+  selectedItem: SelectedItem | null;
+  setSelectedItem: Dispatch<SetStateAction<SelectedItem | null>>;
 }
 
-// Componente recursivo para renderizar dados
 const DataRenderer = ({ data }: { data: any }) => {
   if (data == null) return <p className="text-gray-400 italic">nulo</p>;
 
@@ -52,8 +52,10 @@ const DataRenderer = ({ data }: { data: any }) => {
 };
 
 export const NodeMenu = ({ selectedItem, setSelectedItem }: NodeMenuProps) => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [semaforoFormOpen, setSemaforoFormOpen] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [semaforoFormOpen, setSemaforoFormOpen] = useState(false);
+
+  if (!selectedItem) return null;
 
   return (
     <>
@@ -64,30 +66,26 @@ export const NodeMenu = ({ selectedItem, setSelectedItem }: NodeMenuProps) => {
         <SheetContent side="right" className="w-[350px] sm:w-[400px] p-0">
           <SheetHeader className="border-b px-4 py-3">
             <SheetTitle>
-              {selectedItem?.type === "node"
+              {selectedItem.type === "node"
                 ? "Nó Selecionado"
                 : "Aresta Selecionada"}
             </SheetTitle>
+            <SheetDescription>Detalhes do nó.</SheetDescription>
           </SheetHeader>
 
           <div className="p-4 overflow-y-auto h-full text-md">
-            {selectedItem ? (
-              <DataRenderer data={selectedItem.data} />
-            ) : (
-              <p className="text-gray-400 text-md italic">
-                Nenhum item selecionado
-              </p>
-            )}
+            <DataRenderer data={selectedItem.data} />
           </div>
-          <div>
+
+          <div className="border-t p-4 flex gap-2">
             <Button
-              className="bg-primary outline-0 m-4 cursor-pointer hover:bg-orange-600"
+              className="bg-primary outline-0 cursor-pointer hover:bg-orange-600"
               onClick={() => setModalOpen(true)}
             >
               ClearWayNode
             </Button>
             <Button
-              className="bg-primary outline-0 m-4 cursor-pointer hover:bg-orange-600"
+              className="bg-primary outline-0 cursor-pointer hover:bg-orange-600"
               onClick={() => setSemaforoFormOpen(true)}
             >
               Vincular Semáforo
@@ -95,17 +93,25 @@ export const NodeMenu = ({ selectedItem, setSelectedItem }: NodeMenuProps) => {
           </div>
         </SheetContent>
       </Sheet>
+
       <RequestModal
         open={modalOpen}
         onOpenChange={setModalOpen}
         title="Limpar Way Node"
         message={`Deseja realmente limpar o Way?`}
         asyncAction={async () => {
-          const wayId = selectedItem?.data.tags.wayProps.wayId;
+          const wayId = selectedItem.data.tags.wayProps?.wayId;
           return await GraphClient.ClearWayNode(wayId);
         }}
         onSuccess={() => console.log("Way Node limpo com sucesso!")}
         onError={(err) => console.error("Erro ao limpar Way Node:", err)}
+      />
+
+      <SemaforoFormModal
+        open={semaforoFormOpen}
+        onOpenChange={setSemaforoFormOpen}
+        ways={selectedItem.data.tags.ways}
+        nodeId={selectedItem.data.tags.nodeId!}
       />
     </>
   );

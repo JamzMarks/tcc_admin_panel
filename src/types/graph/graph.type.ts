@@ -1,8 +1,8 @@
 export type Relationships = {
     id: string;
     type: string;
-    startNodeId: number;
-    endNodeId: number;
+    startNodeId: string;
+    endNodeId: string;
     properties: object;
 };
 
@@ -48,8 +48,47 @@ export type Way = {
     nodes: FNode[]
 }
 
+export type DeviceBase = {
+  id: string;     
+  type: "Device" | "Semaforo";
+  labels: string[];
+};
+
+export type DeviceNode = DeviceBase & {
+  type: "Device";
+  properties: {
+    macAddress: string;
+    lastUpdate: string;
+    confiability: number;
+    id: string;
+    type: string; 
+    isActive: boolean;
+    deviceId: string;
+    flow: number;
+  };
+};
+
+export type SemaforoNode = DeviceBase & {
+  type: "Semaforo";
+  properties: {
+    deviceKey: string;
+    id: number;
+    deviceId: string;
+  };
+};
+
+export type Devices = DeviceNode | SemaforoNode;
+
+export type DevicesRelations = {
+  id: string,
+  type: "HAS_SEMAFORO" | "DEVICE_BETWEEN";
+  startNodeId: string
+  endNodeId: string
+  properties: object
+}
 
 export type WayWithNodes = {
     nodes: Way[],
-    relationships: Relationships[];
+    relationships: Relationships[],
+    devices: Devices[]
 }

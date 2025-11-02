@@ -7,8 +7,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { CameraButtonsActions } from "./CameraButtonsActions";
 import { CameraFilters } from "./CameraFilters";
+import { useFormatter, useTranslations } from "next-intl";
+import { StatusBadge } from "@/components/ui/badge/StatusBadge";
 
 export default function CamerasTable() {
+  const t = useTranslations("Devices.Camera");
+  const format = useFormatter();
   const [filters, setFilters] = useState<DeviceFilters>({
     query: null,
     isActive: null,
@@ -23,24 +27,45 @@ export default function CamerasTable() {
 
   return (
     <div className="space-y-4">
-      <CameraFilters onFilter={setFilters} filters={filters}/>
-        <BaseTable<Camera>
-          loading={isLoading}
-          error={isError}
-          columns={[
-            { key: "deviceId", label: "Device ID" },
-            { key: "macAddress", label: "MAC" },
-            { key: "ip", label: "IP" },
-            { key: "createdAt", label: "Criado em" },
-            {
-              key: "actions",
-              label: "Ações",
-              render: (c) => <CameraButtonsActions macAddress={c.macAddress} />,
-            },
-          ]}
-          data={cameras}
-          emptyMessage="Nenhuma câmera cadastrada"
-        />
+      <CameraFilters onFilter={setFilters} filters={filters} />
+      <BaseTable<Camera>
+        loading={isLoading}
+        error={isError}
+        columns={[
+          { key: "deviceId", label: t("Table.device") },
+          { key: "macAddress", label: t("Table.mac") },
+          { key: "ip", label: t("Table.ip") },
+          {
+            key: "createdAt",
+            label: t("Table.createAt"),
+            render: (s) =>
+              s.createdAt ? (
+                format.dateTime(new Date(s.createdAt), {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })
+              ) : (
+                <p className="text-sm">{t("Table.dateNot")}</p>
+              ),
+          },
+          {
+            key: "status",
+            label: t("Table.status"),
+            render: (u) => <StatusBadge status={u.isActive} />,
+          },
+          {
+            key: "actions",
+            label: t("Table.Actions.actionsTable"),
+            render: (c) => <CameraButtonsActions macAddress={c.macAddress} />,
+          },
+        ]}
+        data={cameras}
+        emptyMessage={t("notFound")}
+      />
     </div>
   );
 }

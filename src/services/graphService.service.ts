@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { apiFetch } from "@/lib/api/client";
 import { Graph, WayWithNodes } from "@/types/graph/graph.type";
-// import { ApiResponse } from "@/types/interfaces/apiResponse";
-// import qs from "query-string";
+import { LinkSemaforo } from "@/types/graph/linkGraph.type";
 
 class GraphService {
 
@@ -29,6 +28,13 @@ class GraphService {
   public async ClearWayNode(wayId: string): Promise<Graph>{
     return await apiFetch(`dv/graph/clear/${wayId}`, {
       method: "POST"
+    });
+  }
+
+  public async LinkSemaforo(data: LinkSemaforo, nodeId: string) {
+    return await apiFetch(`dv/graph/nodes/${nodeId}/semaforo`, {
+      method: "POST",
+      body: JSON.stringify(data)
     });
   }
 

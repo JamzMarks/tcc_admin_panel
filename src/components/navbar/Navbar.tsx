@@ -1,7 +1,6 @@
 
 import Image from "next/image";
 import { UserMenu } from "./components/user/UserMenu";
-import { NotificationMenu } from "./components/notification/NotificationMenu";
 import { MenuButton } from "./components/MenuButton";
 import { LogosPath } from "../ui/logo";
 
@@ -22,7 +21,6 @@ export const Navbar = () => {
         </div>
       </div>
       <div className="flex gap-4 h-full w-[240px] pr-2 justify-end mr-4">
-        <NotificationMenu/>
         <UserMenu/>
       </div>
 

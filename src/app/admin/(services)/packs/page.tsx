@@ -9,7 +9,7 @@ export default function PackPage() {
     <div className="space-y-4">
       <PageTitle>Pack Manager</PageTitle>
       <PacksInfoSection/>
-
+          
       <PacksTableSection/>
     </div>
   );

@@ -1,70 +1,75 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-type FormValues = {
-  lastPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-};
+import { motion, AnimatePresence } from "framer-motion";
+import { UpdateUserPasswordDto } from "@/types/user/update-user-password.type";
+import { AuthClient } from "@/services/auth.service";
 
 export const UpdatePasswordModal = ({
   isOpen,
   onClose,
-  onConfirm,
+  userId,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (newPassword: string) => void;
+  userId: string | undefined;
 }) => {
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<UpdateUserPasswordDto>();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmationPassword, setConfirmation] = useState("");
+  const [successMessage, setSuccessMessage] = useState(false);
 
   if (!isOpen) return null;
 
   const newPassword = watch("newPassword");
-  const confirmPassword = watch("confirmPassword");
 
-  const onSubmit = (data: FormValues) => {
-    if (data.newPassword !== data.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+  const onSubmit = async (data: UpdateUserPasswordDto) => {
+    try {
+      await AuthClient.UpdateUserPassword(userId!, data);
+
+      setSuccessMessage(true);
+      setTimeout(() => {
+        setSuccessMessage(false);
+        onClose();
+        reset();
+        setConfirmation("");
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+      alert("Error updating password. Please try again.");
     }
-    onConfirm(data.newPassword);
-    onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg w-full max-w-md p-6">
+      <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg w-full max-w-md p-6 relative">
         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
           Update Password
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
           <div>
             <Input
               type={showPassword ? "text" : "password"}
               placeholder="Enter your last password"
-              {...register("lastPassword", { required: "Required" })}
+              {...register("oldPassword", { required: "Required" })}
             />
-            {errors.lastPassword && (
+            {errors.oldPassword && (
               <p className="text-xs text-red-500 mt-1">
-                {errors.lastPassword.message}
+                {errors.oldPassword.message}
               </p>
             )}
           </div>
-
 
           <div>
             <Input
@@ -88,24 +93,25 @@ export const UpdatePasswordModal = ({
           <div className="relative">
             <Input
               type={showPassword ? "text" : "password"}
-              placeholder="Confirm your password"
-              {...register("confirmPassword", { required: "Required" })}
+              placeholder="Confirm your new password"
+              value={confirmationPassword}
+              onChange={(e) => setConfirmation(e.target.value)}
+              required
             />
-            {errors.confirmPassword && (
-              <p className="text-xs text-red-500 mt-1">
-                {errors.confirmPassword.message}
-              </p>
-            )}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-2.5 text-gray-500"
             >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPassword ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
             </button>
           </div>
 
-          {newPassword && confirmPassword && newPassword !== confirmPassword && (
+          {newPassword && confirmationPassword && newPassword !== confirmationPassword && (
             <p className="text-xs text-red-500">
               New password and confirmation do not match.
             </p>
@@ -127,6 +133,21 @@ export const UpdatePasswordModal = ({
             </button>
           </div>
         </form>
+
+        {/* Mensagem de sucesso */}
+        <AnimatePresence>
+          {successMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-100 px-4 py-2 rounded-lg text-sm font-medium shadow-md"
+            >
+              <CheckCircle className="w-4 h-4" />
+              Password updated successfully!
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

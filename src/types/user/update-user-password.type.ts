@@ -1,4 +1,4 @@
 export type UpdateUserPasswordDto = {
-    newPassword: string,
-    confirmationPassword: string
+    oldPassword: string,
+    newPassword: string
 }
