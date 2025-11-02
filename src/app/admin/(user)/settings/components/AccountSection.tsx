@@ -94,6 +94,7 @@ export const AccountSection = () => {
       <UpdatePasswordModal
         isOpen={isPasswordOpen}
         onClose={() => setPasswordOpen(false)}
+        userId={user?.id}
       />
 
       <UpdateEmailModal

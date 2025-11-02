@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { AuthClient } from "@/services/auth.service";
 import { UserResponseDto } from "@/types/interfaces/me";
 import { ProfileHeader } from "./ProfileHeader";
-import { ProfileConnections } from "./ProfileConnections";
 
 export const ProfileWrapper = () => {
   const [user, setUser] = useState<UserResponseDto | null>(null);
@@ -41,16 +40,16 @@ export const ProfileWrapper = () => {
         <ProfileHeader user={user} />
       </SectionWithHeader>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <SectionWithHeader title="Info">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <ProfileConnections googleConnected={false} githubConnected={true} />
+        {/* <SectionWithHeader title="Info">
+          <div>
+            
           </div>
         </SectionWithHeader>
         <SectionWithHeader title="Info">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <ProfileConnections googleConnected={false} githubConnected={true} />
+          <div>
+            
           </div>
-        </SectionWithHeader>
+        </SectionWithHeader> */}
       </div>
     </>
   );

@@ -2,6 +2,7 @@
 import { DarshBoardFunctions } from "./DashboardFunctions";
 import {
   Boxes,
+  Cable,
   Cctv,
   ExternalLink,
   FolderCog,
@@ -51,7 +52,7 @@ export const DashboardSidebar = () => {
               <FolderCog />
               <div className="flex gap-1 items-center">
                 <p>{t("Documentation")}</p>
-                <ExternalLink className="w-3" />
+                <ExternalLink className="w-3" href="https://github.com/JamzMarks/tailfox"/>
               </div>
             </LinkItem>
             <LinkItem linkTo="/admin/apis">
@@ -73,6 +74,10 @@ export const DashboardSidebar = () => {
             <LinkItem linkTo="/admin/packs">
               <Boxes />
               {t("Packs")}
+            </LinkItem>
+            <LinkItem linkTo="/admin/devices">
+              <Cable />
+              {t("Devices")}
             </LinkItem>
             <LinkItem linkTo="/admin/graph">
               <Map />
