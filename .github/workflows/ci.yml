@@ -10,27 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Baixar o código
+      # 1️⃣ Clonar o repositório
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Instalar Node.js  e configurar cache do pnpm
+      # 2️⃣ Configurar Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
 
-      # 3️⃣ Instalar pnpm
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
-      # 4️⃣ Instalar dependências
+      # 3️⃣ Instalar dependências
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
-      # 5️⃣ Build do projeto
+      # 4️⃣ Build do projeto Next.js
       - name: Build Next.js project
-        run: pnpm run build
+        run: npm run build
