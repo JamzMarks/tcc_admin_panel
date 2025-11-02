@@ -10,21 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Clonar o repositório
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Configurar Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      # 3️⃣ Instalar dependências
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      # 4️⃣ Build do projeto Next.js
       - name: Build Next.js project
         run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:3000/api
