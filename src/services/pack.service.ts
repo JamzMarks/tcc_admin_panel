@@ -9,13 +9,13 @@ class PackService {
   constructor() {}
 
   public async GetPacks(): Promise<ApiResponse<PackDto[]>>{
-    return await apiFetch('dv/pack', {
+    return await apiFetch('/dv/pack', {
       method: "GET"
     });
   } 
 
   public async CreatePack(createPackDto: CreatePackDto): Promise<ApiResponse<PackDto>>{
-    return await apiFetch('dv/pack', {
+    return await apiFetch('/dv/pack', {
       method: "POST",
       body:  JSON.stringify(createPackDto)
     });

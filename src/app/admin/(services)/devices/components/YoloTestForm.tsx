@@ -4,12 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
 import { SectionWithHeader } from "@/components/ui/sections/SimpleSection";
 import { Image as ImageIcon } from "lucide-react";
-
-interface YoloTestFormProps {
-    ip: string;
-    port: number;
-}
-
+import { YoloClient } from "@/services/yolo.service";
 
 export const YoloTestForm = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -35,10 +30,7 @@ export const YoloTestForm = () => {
       const formData = new FormData();
       formData.append("file", selectedImage);
 
-      const response = await fetch("http://localhost:7676/test", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await YoloClient.TestYolo(formData);
 
       if (!response.ok) throw new Error("Erro ao enviar imagem");
 

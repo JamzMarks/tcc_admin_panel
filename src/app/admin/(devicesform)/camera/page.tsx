@@ -2,22 +2,32 @@ import { SectionWithHeader } from "@/components/ui/sections/SimpleSection";
 import { CameraForm } from "./components/CameraForm";
 import CamerasTable from "./components/CameraTable";
 import { PageTitle } from "@/components/ui/elements/PageTitle";
-import { List } from "lucide-react";
+import { List, PlusCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-
 const CameraPage = () => {
-    const t = useTranslations('')
-    return (
+  const t = useTranslations("");
+  return (
+    <div className="space-y-4">
+      <PageTitle>Camera</PageTitle>
+      <SectionWithHeader title="Traffic Light Infos" Icon={PlusCircle}>
         <div className="space-y-4">
-            <PageTitle>
-                Camera
-            </PageTitle>
-            <SectionWithHeader title="Registered Cameras" Icon={List}>
-                <CamerasTable/>
-            </SectionWithHeader>
+          <p>
+            Device ID is the identifier in Azure IoT Hub and must be unique,
+            recommend to set it with microregion prefix.
+          </p>
+          <p>
+            IP address can change eventually, so this field is commonly updated.
+          </p>
+
+          {/* <CreateTrafficLight /> */}
         </div>
-    )
-}
+      </SectionWithHeader>
+      <SectionWithHeader title="Registered Cameras" Icon={List}>
+        <CamerasTable />
+      </SectionWithHeader>
+    </div>
+  );
+};
 
 export default CameraPage;

@@ -44,7 +44,7 @@ export const UserModal = ({ isOpen, onClose, onSubmit, user }: UserModalProps) =
         password: "",
         role: Roles.USER,
         avatar: "",
-      }); // criar -> vazio
+      }); 
     }
   }, [user, reset, isOpen]);
 

@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { SimpleComboBox } from "@/components/ui/combo/SimpleComboBox";
 import { CreateSemaforo } from "@/types/devices/devices.interface";
 import { DevicesClient } from "@/services/devices.service";
+import HttpModal from "@/components/ui/modal/HttpModal";
+import { useState } from "react";
 
 type TrafficLightFormProps = {
   onSuccess?: () => void;
@@ -16,6 +18,15 @@ interface TrafficLightFormValues extends CreateSemaforo {
 }
 
 export function TrafficLightForm({ onSuccess }: TrafficLightFormProps) {
+   const [modal, setModal] = useState<{
+      open: boolean;
+      type: "success" | "error";
+      message: string;
+    }>({
+      open: false,
+      type: "success",
+      message: "",
+    });
   const {
     register,
     handleSubmit,
@@ -32,7 +43,7 @@ export function TrafficLightForm({ onSuccess }: TrafficLightFormProps) {
     },
   });
 
-  const onSubmit = async (values: TrafficLightFormValues) => {
+    const onSubmit = async (values: TrafficLightFormValues) => {
     try {
       const regionPrefix = values.region ?? "XX";
       const deviceIdWithPrefix = `${regionPrefix}-${values.deviceId}`;
@@ -43,14 +54,30 @@ export function TrafficLightForm({ onSuccess }: TrafficLightFormProps) {
         deviceId: deviceIdWithPrefix,
       });
 
-      if (onSuccess) onSuccess();
+      setModal({
+        open: true,
+        type: "success",
+        message: `Semáforo ${deviceIdWithPrefix} criado com sucesso!`,
+      });
+
       reset();
-    } catch (error) {
+      if (onSuccess) onSuccess();
+    } catch (error: any) {
       console.error("Error creating traffic light:", error);
+
+      setModal({
+        open: true,
+        type: "error",
+        message:
+          error?.response?.data?.message ||
+          error?.message ||
+          "Falha ao criar semáforo. Verifique a conexão.",
+      });
     }
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="flex flex-col">
         <label className="mb-1 font-medium">Region</label>
@@ -111,5 +138,12 @@ export function TrafficLightForm({ onSuccess }: TrafficLightFormProps) {
         </Button>
       </div>
     </form>
+    <HttpModal
+        isOpen={modal.open}
+        type={modal.type}
+        message={modal.message}
+        onClose={() => setModal((prev) => ({ ...prev, open: false }))}
+      />
+      </>
   );
 }
