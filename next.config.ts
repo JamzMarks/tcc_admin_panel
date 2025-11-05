@@ -3,12 +3,12 @@ import createNextIntlPlugin from 'next-intl/plugin';
 import fs from 'fs';
  
 const nextConfig: NextConfig = {
-    devServer: {
-      https: {
-        key: fs.readFileSync('./certificates/localhost.key'),
-        cert: fs.readFileSync('./certificates/localhost.crt'),
-      },
-    },
+    // devServer: {
+    //   https: {
+    //     key: fs.readFileSync('./certificates/localhost.key'),
+    //     cert: fs.readFileSync('./certificates/localhost.crt'),
+    //   },
+    // },
     images: {
     remotePatterns: [
       {
