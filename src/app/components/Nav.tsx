@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export const Nav = () => {
   return (
-    <nav className="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center rounded-2xl my-4 ">
-      <h1 className="text-xl font-bold text-gray-800">TailFox Admin</h1>
+    <nav className="mx-auto w-full max-w-[1024px] bg-white shadow-md py-4 px-6 flex justify-between items-center rounded-2xl my-4 ">
+      <h1 className="text-xl font-semibold text-gray-800">TailFox Panel</h1>
       <div className="space-x-4">
         <Link
-          href="/termos"
+          href="/terms"
           className="text-gray-600 hover:text-primary transition-colors"
         >
           Termos

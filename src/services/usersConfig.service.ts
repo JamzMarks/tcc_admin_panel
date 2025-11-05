@@ -8,20 +8,20 @@ class UsersConfigService {
   constructor(){}
 
   public async GetUserConfigByUser(userId: string): Promise<ApiResponse<UserConfigDto>>{
-    return await apiFetch(`ad/Users-config/u/${userId}`, {
+    return await apiFetch(`/ad/Users-config/u/${userId}`, {
       method: "GET",
     })
   }
 
   public async UpdateUserConfig(userConfig: UpdateUserConfigDto): Promise<ApiResponse<UserConfigDto>>{
-    return await apiFetch(`ad/Users-config/${userConfig.userId}/config`, {
+    return await apiFetch(`/ad/Users-config/${userConfig.userId}/config`, {
       method: "PATCH",
       body:  JSON.stringify(userConfig)
     })
   }
 
   public async GetMyConfigs(): Promise<ApiResponse<UserConfigDto>>{
-    return await apiFetch('ad/Users-config/me', {
+    return await apiFetch('/ad/Users-config/me', {
       method: "GET",
     })
   }

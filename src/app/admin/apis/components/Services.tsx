@@ -19,6 +19,7 @@ type Service = {
   description: string;
   href: string;
   icon: LucideIcon;
+  github: string;
 };
 
 
@@ -30,23 +31,28 @@ const MSServices = () => {
     {
       title: t('items.0.title'),
       description: t('items.0.description'),
-      href: "#",
+      href: "ad/docs",
+      github: "https://github.com/JamzMarks/TCC",
       icon: Shield,
     },
     {
       title: t('items.1.title'),
       description: t('items.1.description'),
-      href: "#",
+      href: "ad/docs",
+      github: "https://github.com/JamzMarks/tcc_devices",
       icon: Activity,
     },
     {
       title: t('items.2.title'),
       description: t('items.2.description'),
-      href: "#",
+      href: "ad/docs",
+      github: "https://github.com/JamzMarks/tcc_audit",
       icon: BarChart3,
     },
   ]
+  const url = process.env.NEXT_PUBLIC_API_URL
   return (
+    
     <SectionWithHeader title={t('title')} Icon={Server}>
 
     
@@ -102,11 +108,16 @@ const MSServices = () => {
 
             <div className="flex gap-3 pt-4">
               <Button variant="default" asChild>
-                <a href={selectedService?.href} target="_blank">
+                <a href={url! + selectedService?.href} target="_blank">
                   Abrir Swagger
                 </a>
               </Button>
-              <Button variant="outline" onClick={() => setSelectedService(null)} >
+              <Button variant="default" asChild className="bg-black text-amber-50 hover:bg-gray-900">
+                <a href={selectedService?.github} target="_blank">
+                  Abrir GitHub
+                </a>
+              </Button>
+              <Button variant="outline" onClick={() => setSelectedService(null)} className="cursor-pointer" >
                 Fechar
               </Button>
             </div>

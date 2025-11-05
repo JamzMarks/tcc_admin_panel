@@ -4,6 +4,10 @@
     "description": "This is the dashboard where you can manage users, devices, and view analytics.",
     "loading": "Loading dashboard..."
   },
+  "TermsPage": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated on {date}"
+  },
   "SideBar": {
     "Dashboard": "Dashboard",
     "Integration": "Integration",
@@ -207,11 +211,11 @@
       "submitButton": "Submit",
       "cancelButton": "Cancel",
       "Roles": {
-        "ADMIN": "Admin",
-        "USER": "User",
-        "ENGINEER": "Engineer",
-        "DEVELOPER": "Developer",
-        "AUDITOR": "Auditor"
+        "Admin": "Admin",
+        "User": "User",
+        "Engineer": "Engineer",
+        "Developer": "Developer",
+        "Auditor": "Auditor"
       }
     }
   },

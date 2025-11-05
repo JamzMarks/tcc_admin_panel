@@ -20,7 +20,7 @@ class DevicesService {
   public async GetCameras(
     filters: DeviceFilters
   ): Promise<ApiResponse<Camera[]>> {
-    return await apiFetch("dv/camera", {
+    return await apiFetch("/dv/camera", {
       method: "GET",
     });
   }
@@ -29,14 +29,14 @@ class DevicesService {
     filters: SemaforoFilters
   ): Promise<ApiResponse<SemaforoDto[]>> {
     const queryString = buildQuery(filters);
-    const url = queryString ? `dv/semaforo?${queryString}` : "dv/semaforo";
+    const url = queryString ? `/dv/semaforo?${queryString}` : "dv/semaforo";
     return await apiFetch(url, {
       method: "GET",
     });
   }
 
   public async CreateTrafficLight(createUserDto: CreateSemaforo): Promise<ApiResponse<Semaforo[]>>{
-    return await apiFetch('dv/semaforo', {
+    return await apiFetch('/dv/semaforo', {
       method: "POST",
       body:  JSON.stringify(createUserDto)
     });
