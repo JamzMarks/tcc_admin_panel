@@ -1,5 +1,6 @@
 import { PageTitle } from "@/components/ui/elements/PageTitle";
 import { ProfileWrapper } from "./components/ProfileWrapper";
+import { UserInfo } from "./components/UserInfo";
 
 const ProfilePage = () => {
   return (
@@ -8,6 +9,7 @@ const ProfilePage = () => {
         User Profile
       </PageTitle>
       <ProfileWrapper/>
+      <UserInfo/>
     </div>
   );
 };

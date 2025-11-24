@@ -29,16 +29,12 @@ export const YoloTestForm = () => {
     try {
       const formData = new FormData();
       formData.append("file", selectedImage);
-
-      const response = await YoloClient.TestYolo(formData);
-
-      if (!response.ok) throw new Error("Erro ao enviar imagem");
-
-      const blob = await response.blob();
+      const blob = await YoloClient.TestYolo(formData);
       const resultImageUrl = URL.createObjectURL(blob);
       setResultUrl(resultImageUrl);
     } catch (err) {
       console.error(err);
+      
       alert("Erro ao testar imagem");
     } finally {
       setLoading(false);

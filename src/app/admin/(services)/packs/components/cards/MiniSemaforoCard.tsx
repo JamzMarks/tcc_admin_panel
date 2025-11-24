@@ -1,39 +1,33 @@
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
+import { SemaforoDto } from "@/types/devices/semaforo/semaforoDto.type";
 import { Wifi, WifiOff } from "lucide-react";
-import { useEffect, useRef } from "react";
-import { useDrag } from "react-dnd";
+import { useDraggable } from "@dnd-kit/core";
 
-export type MiniSemaforoCardType = {
-  id: number;
-  deviceId: string;
-  isActive: boolean;
-}
+export const MiniSemaforoCard = ({ semaforo }: { semaforo: SemaforoDto }) => {
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: semaforo.id.toString(),
+    data: semaforo,
+  });
 
-export const MiniSemaforoCard = ({ semaforo }: { semaforo: MiniSemaforoCardType }) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: "SEMAFORO",
-    item: semaforo,
-    collect: (monitor) => ({ isDragging: !!monitor.isDragging() }),
-  }));
-
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (ref.current) drag(ref.current);
-  }, [drag]);
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined;
 
   return (
     <Card
-      ref={ref}
-      className={`p-2 m-1 cursor-move ${
-        isDragging ? "opacity-50" : "opacity-100"
-      }`}
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      className={`p-2 m-1 cursor-grab ${isDragging ? "opacity-50" : "opacity-100"}`}
     >
       <CardContent>
         <div className="flex gap-2 align-middle items-center">
           <div className="text-blue-500">
-            {semaforo.isActive ? <Wifi className="w-5 h-5" /> : <WifiOff  className="w-5 h-5"/>}
-            
+            {semaforo.isActive ? <Wifi className="w-5 h-5" /> : <WifiOff className="w-5 h-5" />}
           </div>
           <div>
             <p>{semaforo.deviceId}</p>
@@ -44,9 +38,7 @@ export const MiniSemaforoCard = ({ semaforo }: { semaforo: MiniSemaforoCardType 
                     ? "bg-green-500 shadow-green-500/50"
                     : "bg-red-500 shadow-red-500/50"
                 }`}
-                aria-label={
-                  semaforo.isActive ? "Semáforo ativo" : "Semáforo inativo"
-                }
+                aria-label={semaforo.isActive ? "Semáforo ativo" : "Semáforo inativo"}
                 role="status"
               />
               <span

@@ -5,8 +5,8 @@ import fs from 'fs';
 const nextConfig: NextConfig = {
     // devServer: {
     //   https: {
-    //     key: fs.readFileSync('./certificates/localhost.key'),
-    //     cert: fs.readFileSync('./certificates/localhost.crt'),
+    //     key: fs.readFileSync('./certificates/cloudflare-origin.key'),
+    //     cert: fs.readFileSync('./certificates/cloudflare-origin.crt'),
     //   },
     // },
     images: {

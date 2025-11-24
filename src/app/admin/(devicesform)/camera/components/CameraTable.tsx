@@ -33,11 +33,29 @@ export default function CamerasTable() {
         error={isError}
         columns={[
           { key: "deviceId", label: t("Table.device") },
-          { key: "macAddress", label: t("Table.mac") },
+          { key: "confiability", label: t("Table.confiability") },
+          { key: "flow", label: t("Table.flow") },
           { key: "ip", label: t("Table.ip") },
           {
             key: "createdAt",
             label: t("Table.createAt"),
+            render: (s) =>
+              s.createdAt ? (
+                format.dateTime(new Date(s.createdAt), {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })
+              ) : (
+                <p className="text-sm">{t("Table.dateNot")}</p>
+              ),
+          },
+          {
+            key: "updatedAt",
+            label: t("Table.updatedAt"),
             render: (s) =>
               s.createdAt ? (
                 format.dateTime(new Date(s.createdAt), {

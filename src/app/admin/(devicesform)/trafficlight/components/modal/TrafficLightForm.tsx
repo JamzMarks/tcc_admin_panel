@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SimpleComboBox } from "@/components/ui/combo/SimpleComboBox";
-import { CreateSemaforo } from "@/types/devices/devices.interface";
+
 import { DevicesClient } from "@/services/devices.service";
 import HttpModal from "@/components/ui/modal/HttpModal";
 import { useState } from "react";
+import { CreateSemaforo } from "@/types/devices/semaforo/semaforoDto.type";
 
 type TrafficLightFormProps = {
   onSuccess?: () => void;
@@ -37,7 +38,6 @@ export function TrafficLightForm({ onSuccess }: TrafficLightFormProps) {
   } = useForm<TrafficLightFormValues>({
     defaultValues: {
       deviceId: "",
-      ip: "",
       macAddress: "",
       region: "",
     },
@@ -49,7 +49,6 @@ export function TrafficLightForm({ onSuccess }: TrafficLightFormProps) {
       const deviceIdWithPrefix = `${regionPrefix}-${values.deviceId}`;
 
       await DevicesClient.CreateTrafficLight({
-        ip: values.ip,
         macAddress: values.macAddress,
         deviceId: deviceIdWithPrefix,
       });
@@ -112,11 +111,6 @@ export function TrafficLightForm({ onSuccess }: TrafficLightFormProps) {
       </div>
 
       <div className="flex flex-col">
-        <label className="mb-1 font-medium">IP Address</label>
-        <Input placeholder="192.168.1.1" {...register("ip")} />
-      </div>
-
-      <div className="flex flex-col">
         <label className="mb-1 font-medium">MAC</label>
         <Input placeholder="192.168.1.1" {...register("macAddress")} />
       </div>
@@ -124,7 +118,7 @@ export function TrafficLightForm({ onSuccess }: TrafficLightFormProps) {
       <div className="flex space-x-2">
         <Button
           type="button"
-          className="bg-gray-800 text-red-500 cursor-pointer hover:bg-white"
+          variant="destructive"
           onClick={() => reset()}
         >
           Cancel

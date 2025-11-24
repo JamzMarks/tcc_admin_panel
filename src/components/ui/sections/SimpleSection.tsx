@@ -15,7 +15,7 @@ export const SimpleSection = ({children, className}: SimpleSectionProps) => {
 }
 
 
-interface SectionWithHeaderProps extends SimpleSectionProps{
+export interface SectionWithHeaderProps extends SimpleSectionProps{
     title: string,
     Icon?: LucideIcon,
 }

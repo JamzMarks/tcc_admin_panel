@@ -35,11 +35,11 @@
       "title": "Preferences",
       "language": "Language",
       "languageDescription": "Choose the language you prefer to use across the platform.",
-      "languageInputDescription": "Switch language.",
+      "languageInputDescription": "Switch language",
       "languagePlaceholder": "Select a language...",
       "theme": "Theme",
       "themeDescription": "Switch light and dark mode for a personalized experience.",
-      "themeInputDescription": "Switch theme.",
+      "themeInputDescription": "Switch theme",
       "themePlaceholder": "Select a theme...",
       "currentPreferences": "Current Preferences",
       "selectedLanguage": "Selected language",
@@ -175,7 +175,16 @@
       "createdAt": "Created at",
       "viewDetails": "View Details",
       "loading": "Loading Users please wait...",
-      "noUsers": "Error in fetching users, try again later."
+      "noUsers": "Error in fetching users, try again later.",
+      "error": "Unexpected error, please try again later.",
+      "deleteSuccess": "User deleted successfully.",
+      "deleteError": "Error deleting user, please try again later.",
+      "Actions": {
+        "actionsTable": "Actions",
+        "edit": "Edit user",
+        "delete": "Delete user"
+      }
+    
     },
     "UsersList": {
       "userList": "Users List",
@@ -238,7 +247,10 @@
         "device": "Device ID",
         "mac": "MAC",
         "ip": "IP Address",
+        "flow": "Last Flow",
+        "confiability": "Confiability",
         "createAt": "Created at",
+        "updatedAt": "Updated at",
         "notlinked": "Not linked",
         "dateNot": "Date not informed",
         "Actions": {
@@ -264,7 +276,8 @@
         "Actions": {
           "actionsTable": "Actions",
           "edit": "Edit traffic light",
-          "delete": "Delete traffic light"
+          "delete": "Delete traffic light",
+          "resource": "Traffic Light"
         }
       },
       "filters": {
@@ -283,6 +296,22 @@
           "ActiveOption": "Active",
           "InactiveOption": "Inactive"
         }
+      },
+      "EditTrafficLightModal": {
+        "title": "Edit Traffic Light",
+        "macAddress": "MAC Address",
+        "macPlaceholder": "Ex: 24:0A:C4:00:01:10",
+        "ip": "IP Address",
+        "ipPlaceholder": "Ex: 192.168.1.27",
+        "isActive": "Active",
+        "cancel": "Cancel",
+        "saveChanges": "Save Changes",
+        "saving": "Saving...",
+        "loading": "Loading...",
+        "successTitle": "Success",
+        "successMessage": "Traffic light updated successfully.",
+        "errorTitle": "Error",
+        "defaultError": "Unexpected error occurred"
       }
     }
   },

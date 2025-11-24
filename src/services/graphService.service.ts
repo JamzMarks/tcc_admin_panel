@@ -31,12 +31,7 @@ class GraphService {
     });
   }
 
-  public async LinkSemaforo(data: LinkSemaforo, nodeId: string) {
-    return await apiFetch(`/dv/graph/nodes/${nodeId}/semaforo`, {
-      method: "POST",
-      body: JSON.stringify(data)
-    });
-  }
+  
 
 
 }

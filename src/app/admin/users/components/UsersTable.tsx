@@ -12,8 +12,6 @@ import { UserFilter } from "@/types/user/user-filters.type";
 import { BaseTable } from "@/components/ui/table/BaseTable";
 import { StatusBadge } from "@/components/ui/badge/StatusBadge";
 
-
-
 export default function UsersTable() {
   const t = useTranslations("UsersPage");
   const format = useFormatter();

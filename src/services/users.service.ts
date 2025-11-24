@@ -34,7 +34,7 @@ class UsersService {
     })
   }
 
-  public async UpdateUser(id: string, userDto: CreateUserDto): Promise<ApiResponse<UserDto>>{
+  public async UpdateUser(id: string, userDto: Partial<UserDto>): Promise<void>{
     return await apiFetch(`/ad/users/${id}`, {
       method: "PATCH",
       body:  JSON.stringify(userDto)

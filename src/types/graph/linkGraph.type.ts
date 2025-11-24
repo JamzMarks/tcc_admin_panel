@@ -1,6 +1,7 @@
 import { SemaforoDto } from "../devices/semaforo/semaforoDto.type";
 
 export interface LinkSemaforo {
-  semaforoData: SemaforoDto;
+  semaforoDeviceId: string;
   wayId: string;
+  nodeId: string
 }
