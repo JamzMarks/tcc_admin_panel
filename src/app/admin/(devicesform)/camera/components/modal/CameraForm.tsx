@@ -12,7 +12,6 @@ export const CameraForm = () => {
 
   const onSubmit = (data: CreateCamera) => {
     console.log("📸 Camera criada:", data);
-    // aqui você faria a chamada da API (fetch/axios)
     reset();
   };
 
@@ -38,27 +37,6 @@ export const CameraForm = () => {
         />
         {errors.macAddress && (
           <p className="text-red-500 text-sm">{errors.macAddress.message}</p>
-        )}
-      </div>
-
-      {/* IP */}
-      <div>
-        <label className="block mb-1 font-medium">IP</label>
-        <input
-          type="text"
-          {...register("ip", {
-            required: "IP é obrigatório",
-            pattern: {
-              value:
-                /^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/,
-              message: "IP inválido",
-            },
-          })}
-          className="w-full p-2 border rounded"
-          placeholder="192.168.0.10"
-        />
-        {errors.ip && (
-          <p className="text-red-500 text-sm">{errors.ip.message}</p>
         )}
       </div>
 
