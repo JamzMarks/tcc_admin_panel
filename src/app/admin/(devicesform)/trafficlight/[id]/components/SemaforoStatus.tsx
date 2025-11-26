@@ -1,8 +1,8 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { CommandMessage } from "@/types/devices/semaforo/command.type";
 import { calculateSemaforoStatus } from "@/utils/semaforo/semaforoStatus";
+import { useServerTime } from "@/hooks/useServerTime";
 
 interface SemaforoStatusProps {
   status: CommandMessage | null;
@@ -11,6 +11,7 @@ interface SemaforoStatusProps {
 export const SemaforoStatus = ({ status }: SemaforoStatusProps) => {
   const [light, setLight] = useState<"red" | "yellow" | "green" | "off">("off");
   const [fade, setFade] = useState(1); // valor de 0 a 1 controla a suavização
+  const { now, ready } = useServerTime();
 
   useEffect(() => {
     if (!status) {
@@ -19,7 +20,8 @@ export const SemaforoStatus = ({ status }: SemaforoStatusProps) => {
     }
 
     const update = () => {
-      const newLight = calculateSemaforoStatus(status.command);
+      const currentTime = now();
+      const newLight = calculateSemaforoStatus(status.command, currentTime);
 
       // lógica para calcular quanto falta do verde
       const { green_start, green_duration, cycle_total } = status.command;
