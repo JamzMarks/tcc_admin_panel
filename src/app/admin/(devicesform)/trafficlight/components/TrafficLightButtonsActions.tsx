@@ -4,7 +4,6 @@ import { DevicesClient } from "@/services/devices.service";
 import { Pencil, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { EditTrafficLightModal } from "./modal/EditTrafficLight";
 import { useRouter } from "next/navigation";
 
 export const TrafficLightButtonsActions = ({

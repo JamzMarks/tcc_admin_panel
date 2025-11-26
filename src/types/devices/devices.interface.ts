@@ -14,6 +14,7 @@ export interface Camera extends Device {
 
 export interface CreateCamera extends Device{
   deviceId: string;
+  ip: string
 }
 
 
