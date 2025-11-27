@@ -60,6 +60,10 @@ export const DashboardSidebar = () => {
               <SquareChevronRight />
               {t("API")}
             </LinkItem>
+            <LinkItem linkTo="/admin/containers">
+              <SquareChevronRight />
+              {t("API")}
+            </LinkItem>
           </DarshBoardFunctions>
           <DarshBoardFunctions title={"Devices"}>
             <LinkItem linkTo="/admin/camera">

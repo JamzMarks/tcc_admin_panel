@@ -30,6 +30,30 @@
     "light": "Switch to light theme",
     "dark": "Switch to dark theme"
   },
+  "Containers": {
+    "title": "Gerenciamento de Containers",
+    "sectionTitle": "Visão Geral",
+    "sectionDescription": "Controle e monitore seus <strong>containers Docker</strong> diretamente pelo painel.",
+
+    "containers": {
+      "title": "Containers Ativos",
+      "description": "Veja containers em execução, estado, portas e comandos.",
+      "button": "Ver containers"
+    },
+
+    "images": {
+      "title": "Imagens Docker",
+      "description": "Gerencie suas imagens: pull, prune, remover, inspecionar.",
+      "button": "Ver imagens"
+    },
+
+    "quickActions": {
+      "title": "Comandos Rápidos",
+      "description": "Atalhos úteis para diagnosticar e monitorar o daemon Docker.",
+      "run": "Rodar",
+      "debug": "Debug"
+    }
+  },
   "Settings": {
     "PreferencesSection": {
       "title": "Preferences",
