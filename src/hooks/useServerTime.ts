@@ -7,7 +7,7 @@ export function useServerTime(syncIntervalMs = 30_000) {
 
   async function sync() {
     try {
-        const {data} = await MQTTClient.GetServerTime();
+        const data = await MQTTClient.GetServerTime();
         
         const clientNow = Date.now();
         offsetRef.current = data.epoch_ms - clientNow;

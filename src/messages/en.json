@@ -24,7 +24,8 @@
     "Admin": "Admin",
     "Users": "Users",
     "AuditLogs": "Audit Logs",
-    "Soon": "Soon"
+    "Soon": "Soon",
+    "Containers": "Containers"
   },
   "ThemeSwitcher": {
     "light": "Switch to light theme",

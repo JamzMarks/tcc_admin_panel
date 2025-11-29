@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { PageTitle } from "@/components/ui/elements/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 import {
   Server,
   Play,
@@ -16,6 +15,7 @@ import {
 export default function ContainersListPage() {
   const [containers, setContainers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   async function loadContainers() {
     setLoading(true);
@@ -23,6 +23,21 @@ export default function ContainersListPage() {
     const data = await res.json();
     setContainers(data);
     setLoading(false);
+  }
+
+  async function handleAction(id: string, action: "start" | "stop") {
+    setActionLoading(id + action);
+
+    await fetch(`/api/docker/containers/${id}/${action}`, {
+      method: "POST",
+    });
+
+    await loadContainers();
+    setActionLoading(null);
+  }
+
+  async function openLogs(id: string) {
+    window.open(`/docker/logs/${id}`, "_blank");
   }
 
   useEffect(() => {
@@ -63,3 +78,48 @@ export default function ContainersListPage() {
                     {c.Image} — {c.State} ({c.Status})
                   </p>
                 </div>
+
+                <div className="flex gap-2 mt-3 md:mt-0">
+                  {/* Start Button */}
+                  {c.State !== "running" && (
+                    <Button
+                      size="sm"
+                      onClick={() => handleAction(c.Id, "start")}
+                      disabled={actionLoading === c.Id + "start"}
+                    >
+                      <Play className="h-4 w-4 mr-1" />
+                      {actionLoading === c.Id + "start"
+                        ? "Iniciando..."
+                        : "Start"}
+                    </Button>
+                  )}
+
+                  {/* Stop Button */}
+                  {c.State === "running" && (
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => handleAction(c.Id, "stop")}
+                      disabled={actionLoading === c.Id + "stop"}
+                    >
+                      <StopCircle className="h-4 w-4 mr-1" />
+                      {actionLoading === c.Id + "stop"
+                        ? "Parando..."
+                        : "Stop"}
+                    </Button>
+                  )}
+
+                  {/* Logs Button */}
+                  <Button size="sm" variant="secondary" onClick={() => openLogs(c.Id)}>
+                    <Terminal className="h-4 w-4 mr-1" />
+                    Logs
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

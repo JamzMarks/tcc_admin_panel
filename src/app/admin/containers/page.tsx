@@ -15,6 +15,7 @@ import {
   RefreshCw,
   BugPlay,
 } from "lucide-react";
+import Link from "next/link";
 
 const ContainersPage = () => {
   const t = useTranslations("Containers");
@@ -43,7 +44,7 @@ const ContainersPage = () => {
             {t("containers.description")}
             <div className="mt-4 flex gap-2">
               <Button variant="outline" asChild>
-                <a href="/containers/list">{t("containers.button")}</a>
+                <Link href="admin/containers/list">{t("containers.button")}</Link>
               </Button>
               <Button variant="secondary" size="sm">
                 <RefreshCw className="h-4 w-4" />
@@ -62,7 +63,7 @@ const ContainersPage = () => {
             {t("images.description")}
             <div className="mt-4">
               <Button variant="outline" asChild>
-                <a href="/containers/images">{t("images.button")}</a>
+                <Link href="containers/images">{t("images.button")}</Link>
               </Button>
             </div>
           </CardContent>

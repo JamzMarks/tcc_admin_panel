@@ -4,6 +4,7 @@ import {
   Boxes,
   Cable,
   Cctv,
+  Container,
   ExternalLink,
   FolderCog,
   House,
@@ -61,8 +62,8 @@ export const DashboardSidebar = () => {
               {t("API")}
             </LinkItem>
             <LinkItem linkTo="/admin/containers">
-              <SquareChevronRight />
-              {t("API")}
+              <Container />
+              {t("Containers")}
             </LinkItem>
           </DarshBoardFunctions>
           <DarshBoardFunctions title={"Devices"}>

@@ -3,20 +3,20 @@ import { ApiResponse } from "@/types/interfaces/apiResponse";
 import { MQTTCredentials } from "@/types/mqtt/mqttCredentials";
 import { ServerTime } from "@/types/mqtt/serverTime";
 
-class MQTTService {
+class AuditService {
   constructor() {}
 
   public async GetPacks(): Promise<ApiResponse<MQTTCredentials>>{
-    return await apiFetch('/dv/mqtt/credentials', {
+    return await apiFetch('/mt/mqtt/credentials', {
       method: "GET"
     });
   } 
 
   public async GetServerTime(): Promise<ServerTime>{
-    return await apiFetch('/dv/mqtt/time', {
+    return await apiFetch('/mt/mqtt/time', {
       method: "GET"
     });
   } 
 }
 
-export const MQTTClient = new MQTTService();
+export const AuditClient = new AuditService();
