@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, GitBranch, Terminal, FileCode2, SquareChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { SumoService } from "./components/SumoService";
+
 import { DatabasesService } from "./components/Databases";
 
 const ApisPage = () => {
@@ -70,7 +70,6 @@ const ApisPage = () => {
 
       <MSServices />
       <DatabasesService/>
-      <SumoService/>
     </div>
   );
 };

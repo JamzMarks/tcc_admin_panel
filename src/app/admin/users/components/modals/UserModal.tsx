@@ -28,8 +28,7 @@ export const UserModal = ({ isOpen, onClose, onSubmit, user }: UserModalProps) =
       firstName: "",
       lastName: "",
       password: "",
-      role: Roles.USER,
-      avatar: "",
+      role: Roles.USER
     },
   });
 
@@ -42,8 +41,7 @@ export const UserModal = ({ isOpen, onClose, onSubmit, user }: UserModalProps) =
         firstName: "",
         lastName: "",
         password: "",
-        role: Roles.USER,
-        avatar: "",
+        role: Roles.USER
       }); 
     }
   }, [user, reset, isOpen]);
@@ -132,16 +130,6 @@ export const UserModal = ({ isOpen, onClose, onSubmit, user }: UserModalProps) =
                 ))}
             </select>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium">Avatar (URL)</label>
-            <input
-              type="text"
-              {...register("avatar")}
-              className="w-full rounded-xl border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700"
-            />
-          </div>
-
           {/* Footer */}
           <div className="flex justify-end gap-2 pt-4">
             <button

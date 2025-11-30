@@ -2,13 +2,14 @@
 import { BaseTable } from "@/components/ui/table/BaseTable";
 import { DevicesClient } from "@/services/devices.service";
 import { DeviceFilters } from "@/types/devices/device.filters.type";
-import { Camera } from "@/types/devices/devices.interface";
+
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { CameraButtonsActions } from "./CameraButtonsActions";
 import { CameraFilters } from "./CameraFilters";
 import { useFormatter, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui/badge/StatusBadge";
+import { DeviceDto } from "@/types/devices/sensors/device.type";
 
 export default function CamerasTable() {
   const t = useTranslations("Devices.Camera");
@@ -23,12 +24,12 @@ export default function CamerasTable() {
     queryFn: () => DevicesClient.GetCameras(filters),
   });
 
-  const cameras: Camera[] = data?.data ?? [];
+  const cameras: DeviceDto[] = data?.data ?? [];
 
   return (
     <div className="space-y-4">
       <CameraFilters onFilter={setFilters} filters={filters} />
-      <BaseTable<Camera>
+      <BaseTable<DeviceDto>
         loading={isLoading}
         error={isError}
         columns={[
@@ -78,7 +79,7 @@ export default function CamerasTable() {
           {
             key: "actions",
             label: t("Table.Actions.actionsTable"),
-            render: (c) => <CameraButtonsActions macAddress={c.macAddress} />,
+            render: (c) => <CameraButtonsActions macAddress={c.deviceId} />,
           },
         ]}
         data={cameras}

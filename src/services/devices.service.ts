@@ -1,10 +1,11 @@
 import { apiFetch } from "@/lib/api/client";
+import { CreateDeviceDto } from "@/types/devices/sensors/create.device.type";
 import { DeviceFilters, SemaforoFilters } from "@/types/devices/device.filters.type";
-import { Camera } from "@/types/devices/devices.interface";
 import { CreateSemaforo, SemaforoDto, SemaforoInfoDto, UpdateSemaforo } from "@/types/devices/semaforo/semaforoDto.type";
 import { LinkSemaforo } from "@/types/graph/linkGraph.type";
 import { ApiResponse } from "@/types/interfaces/apiResponse";
 import { buildQuery } from "@/utils/queryBuild";
+import { DeviceDto } from "@/types/devices/sensors/device.type";
 
 class DevicesService {
   constructor() {}
@@ -20,9 +21,16 @@ class DevicesService {
   }
   public async GetCameras(
     filters: DeviceFilters
-  ): Promise<ApiResponse<Camera[]>> {
+  ): Promise<ApiResponse<DeviceDto[]>> {
     return await apiFetch("/dv/camera", {
       method: "GET",
+    });
+  }
+
+  public async CreateDevice(createDeviceDto: CreateDeviceDto): Promise<ApiResponse<DeviceDto>> {
+    return await apiFetch("/dv/camera", {
+      method: "POST",
+      body: JSON.stringify(createDeviceDto),
     });
   }
 

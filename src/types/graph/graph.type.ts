@@ -1,10 +1,4 @@
-export type Relationships = {
-    id: string;
-    type: string;
-    startNodeId: string;
-    endNodeId: string;
-    properties: object;
-};
+
 
 export type Node = {
     id: number;
@@ -15,7 +9,7 @@ export type Node = {
         type?: string;
         lat?: number,
         lon?: number
-        //aqui pode ter mais informacoes 
+
     };  
 };
 
@@ -25,28 +19,7 @@ export interface Graph {
 }
 
 
-export type FNode = {
-    id: string;
-    lat?: number,
-    lon?: number
-    tags?: any;
-}
 
-
-export type Way = {
-    properties: {
-        name?: string,
-        highway?: string,
-        service?: string,
-        id?: {
-            low: number,
-            high: number
-        },
-        oneway?: string,  
-        [key: string]: any,
-    }
-    nodes: FNode[]
-}
 
 export type DeviceBase = {
   id: string;     
@@ -79,12 +52,39 @@ export type SemaforoNode = DeviceBase & {
 
 export type Devices = DeviceNode | SemaforoNode;
 
-export type DevicesRelations = {
-  id: string,
-  type: "HAS_SEMAFORO" | "DEVICE_BETWEEN";
-  startNodeId: string
-  endNodeId: string
-  properties: object
+
+
+//asdasdasdasdasdasdasdasdasdasdasdasd
+
+export type FNode = {
+    id: string;
+    lat?: number,
+    lon?: number
+}
+
+export type Relationships = {
+    id: string;
+    type: string;
+    startNodeId: string;
+    endNodeId: string;
+    properties?: object;
+};
+
+export type Way = {
+    properties: {
+        wayId: string,
+        name?: string,
+        priority: number,
+        highway?: string,
+        service?: string,
+        maxspeed?: string,
+        length?: number,
+        oneway?: string,  
+        bridge?: string,
+        
+        [key: string]: any,
+    }
+    nodes: FNode[]
 }
 
 export type WayWithNodes = {

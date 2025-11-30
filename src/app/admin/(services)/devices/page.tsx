@@ -1,7 +1,4 @@
 import { PageTitle } from "@/components/ui/elements/PageTitle";
-import { SectionWithHeader } from "@/components/ui/sections/SimpleSection";
-import { Camera } from "sigma";
-import { CameraTestForm } from "./components/CameraTestForm";
 import { YoloTestForm } from "./components/YoloTestForm";
 
 
@@ -14,7 +11,7 @@ const DevicesPage = () => {
       </PageTitle>
     <YoloTestForm />
     
-     <CameraTestForm />
+     {/* <CameraTestForm /> */}
 
     </div>
   );

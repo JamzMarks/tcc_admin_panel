@@ -35,7 +35,7 @@ export function CreateNewCamera() {
               Fill the form to register a new traffic light device.
             </DialogDescription>
           </DialogHeader>
-          {/* <CameraForm/> */}
+          <CameraForm/>
         </DialogContent>
       </Dialog>
     </>

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function TrafficLightStatusCard({ online, offline }) {
+export function TrafficLightStatusCard({ online, offline }: { online: number; offline: number }) {
   return (
     <Card className="shadow-sm">
       <CardHeader>

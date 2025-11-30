@@ -61,10 +61,6 @@ export const DashboardSidebar = () => {
               <SquareChevronRight />
               {t("API")}
             </LinkItem>
-            <LinkItem linkTo="/admin/containers">
-              <Container />
-              {t("Containers")}
-            </LinkItem>
           </DarshBoardFunctions>
           <DarshBoardFunctions title={"Devices"}>
             <LinkItem linkTo="/admin/camera">
@@ -95,10 +91,6 @@ export const DashboardSidebar = () => {
             <LinkItem linkTo="/admin/users">
               <Users />
               {t("Users")}
-            </LinkItem>
-            <LinkItem linkTo="/admin/auditlogs">
-              <ScrollText />
-              {t("AuditLogs")}
             </LinkItem>
           </DarshBoardFunctions>
         </div>

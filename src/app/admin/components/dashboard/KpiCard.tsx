@@ -1,6 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function KpiCard({ title, value }) {
+interface KpiProps {
+  title: string;
+  value: string | number;
+}
+
+export function KpiCard({ title, value }: KpiProps) {
   return (
     <Card className="shadow-sm">
       <CardHeader>
