@@ -1,9 +1,11 @@
 import { apiFetch } from "@/lib/api/client";
+import { CreateDeviceDto } from "@/types/devices/sensors/create.device.type";
 import { DeviceFilters, SemaforoFilters } from "@/types/devices/device.filters.type";
-import { Camera, CreateSemaforo, Semaforo } from "@/types/devices/devices.interface";
-import { SemaforoDto } from "@/types/devices/semaforo/semaforoDto.type";
+import { CreateSemaforo, SemaforoDto, SemaforoInfoDto, UpdateSemaforo } from "@/types/devices/semaforo/semaforoDto.type";
+import { LinkDevice, LinkSemaforo } from "@/types/graph/linkGraph.type";
 import { ApiResponse } from "@/types/interfaces/apiResponse";
 import { buildQuery } from "@/utils/queryBuild";
+import { DeviceDto } from "@/types/devices/sensors/device.type";
 
 class DevicesService {
   constructor() {}
@@ -19,9 +21,16 @@ class DevicesService {
   }
   public async GetCameras(
     filters: DeviceFilters
-  ): Promise<ApiResponse<Camera[]>> {
+  ): Promise<ApiResponse<DeviceDto[]>> {
     return await apiFetch("/dv/camera", {
       method: "GET",
+    });
+  }
+
+  public async CreateDevice(createDeviceDto: CreateDeviceDto): Promise<ApiResponse<DeviceDto>> {
+    return await apiFetch("/dv/camera", {
+      method: "POST",
+      body: JSON.stringify(createDeviceDto),
     });
   }
 
@@ -35,12 +44,88 @@ class DevicesService {
     });
   }
 
-  public async CreateTrafficLight(createUserDto: CreateSemaforo): Promise<ApiResponse<Semaforo[]>>{
+  public async GetTrafficLightById(id: string): Promise<ApiResponse<SemaforoInfoDto>>{
+    return await apiFetch(`/dv/semaforo/${id}`, {
+      method: "GET",
+    });
+  }
+
+  public async CreateTrafficLight(createUserDto: CreateSemaforo): Promise<ApiResponse<SemaforoDto[]>>{
     return await apiFetch('/dv/semaforo', {
       method: "POST",
       body:  JSON.stringify(createUserDto)
     });
   }
-}
+
+  public async UpdateTrafficLight(id: number, UpdateSemaforoDto: UpdateSemaforo): Promise<ApiResponse<SemaforoDto>>{
+    return await apiFetch(`/dv/semaforo/${id}`, {
+      method: "PUT",
+      body:  JSON.stringify(UpdateSemaforoDto)
+    });
+  }
+
+  public async deleteTrafficLight(id: string): Promise<ApiResponse<void>>{
+    return await apiFetch(`/dv/semaforo/${id}`, {
+      method: "DELETE",
+    });
+  }
+
+  public async LinkSemaforo(data: LinkSemaforo): Promise<ApiResponse<void>> {
+    console.log(data)
+    return await apiFetch(`/dv/semaforo/${data.semaforoDeviceId}/link`, {
+      method: "POST",
+      body: JSON.stringify({
+        wayId: data.wayId,
+        nodeId: data.nodeId
+      })
+    });
+  }
+  // public async GetTrafficLightById(id: number): Promise<ApiResponse<Semaforo>> {
+  //   await new Promise((r) => setTimeout(r, 300)); // simular delay
+  //   return {
+  //     sucess: true,
+  //     message: `Semáforo ${id} encontrado com sucesso.`,
+  //     data:{
+  //       id,
+  //       macAddress: "AA:BB:CC:DD:EE:11",
+  //       deviceId: "SEMAFORO_001",
+  //       ip: "192.168.0.50",
+  //       deviceKey: "MOCK-KEY-123",
+  //       isActive: true,
+  //       createdAt: new Date().toString(),
+  //       updatedAt: new Date().toString(),
+  //       packId: 1,
+  //       subPackId: null,
+  //     }
+  //   }
+  // }
+
+  // Mock de WebSocket/SSE artificial
+  public listenToTrafficLight(deviceId: string, onMessage: (msg: any) => void) {
+    // Simula eventos chegando a cada 4 segundos
+    let t = 0;
+    setInterval(() => {
+      const mockMsg = {
+        green_start: t % 3 === 0,
+        green_duration: 3000,
+        yellow_start: t % 3 === 1,
+        yellow_duration: 2000,
+        red_start: t % 3 === 2,
+        red_duration: 4000,
+        cicle_total: 9000,
+      };
+      onMessage(mockMsg);
+      t++;
+    }, 4000);
+  }
+
+  public async LinkDispositivo(data: LinkDevice): Promise<ApiResponse<void>> {
+    return await apiFetch(`/dv/camera/${data.deviceId}/link`, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+  }
+};
+
 
 export const DevicesClient = new DevicesService();

@@ -4,6 +4,7 @@ import {
   Boxes,
   Cable,
   Cctv,
+  Container,
   ExternalLink,
   FolderCog,
   House,
@@ -90,10 +91,6 @@ export const DashboardSidebar = () => {
             <LinkItem linkTo="/admin/users">
               <Users />
               {t("Users")}
-            </LinkItem>
-            <LinkItem linkTo="/admin/auditlogs">
-              <ScrollText />
-              {t("AuditLogs")}
             </LinkItem>
           </DarshBoardFunctions>
         </div>

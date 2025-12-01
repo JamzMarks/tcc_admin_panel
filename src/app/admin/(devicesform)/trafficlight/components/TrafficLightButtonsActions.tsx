@@ -4,40 +4,49 @@ import { DevicesClient } from "@/services/devices.service";
 import { Pencil, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const TrafficLightButtonsActions = ({
   macAddress,
-  id
+  id,
 }: {
-  macAddress: string,
-  id: number
+  macAddress: string;
+  id: string;
 }) => {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [editModal, setEditModal] = useState<boolean>(false);
-  const t = useTranslations('Devices.TrafficLight.Table.Actions');
+  const t = useTranslations("Devices.TrafficLight.Table.Actions");
 
   async function handleDelete() {
-    // await DevicesClient.
+    try {
+      await DevicesClient.deleteTrafficLight(id);
+    } catch (error) {
+      console.error("Error deleting traffic light:", error);
+    }
   }
+  const router = useRouter();
+
+  const goToUserPage = (id: string) => {
+    router.push(`trafficlight/${id}`);
+  };
   return (
     <div>
       <div className="space-x-1 space-y-1">
         <ActionTableButton
           Icon={Pencil}
           color="blue"
-          onClick={() => setEditModal(true)}
-          label={t('edit')}
+          onClick={() => goToUserPage(id)}
+          label={t("edit")}
         />
         <ActionTableButton
           Icon={Trash2}
           color="red"
           onClick={() => setDeleteModal(true)}
-          label={t('delete')}
+          label={t("delete")}
         />
       </div>
 
       <DeleteConfirmationModal
-        resourceName="Traffic Light"
+        resourceName={t("resource")}
         isOpen={deleteModal}
         onClose={() => setDeleteModal(false)}
         onConfirm={() => handleDelete()}

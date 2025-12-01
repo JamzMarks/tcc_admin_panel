@@ -14,11 +14,10 @@ const UsersPage = () => {
     <div className="space-y-4">
       <PageTitle>{t('title')}</PageTitle>
       <SectionWithHeader title={t('header')} Icon={Users}>
-        <div>
+        <div className="space-y-2">
           <p className="text-gray-600">{t('description')}</p>
-
-        </div>
         <CreateNewUser/>
+        </div>
       </SectionWithHeader>
 
       <SectionWithHeader title={t('UsersList.userList')} Icon={List}>

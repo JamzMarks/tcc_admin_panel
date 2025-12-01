@@ -3,7 +3,7 @@ import { PacksInfoSection } from "./components/PacksInfo";
 import { PacksTableSection } from "./components/PacksTable";
 
 
-export default function PackPage() {
+export default function PacksPage() {
 
   return (
     <div className="space-y-4">

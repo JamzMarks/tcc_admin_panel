@@ -35,23 +35,9 @@ export const ProfileWrapper = () => {
   }
 
   return (
-    <>
-      <SectionWithHeader title="Account">
-        <ProfileHeader user={user} />
-      </SectionWithHeader>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* <SectionWithHeader title="Info">
-          <div>
-            
-          </div>
-        </SectionWithHeader>
-        <SectionWithHeader title="Info">
-          <div>
-            
-          </div>
-        </SectionWithHeader> */}
-      </div>
-    </>
+    <SectionWithHeader title="Account">
+      <ProfileHeader user={user} />
+    </SectionWithHeader>
   );
 };
 

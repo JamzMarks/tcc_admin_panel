@@ -1,8 +1,8 @@
 "use client";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import {
-  DevicesRelations,
   FNode,
+  Relationships,
   Way,
   WayWithNodes,
 } from "@/types/graph/graph.type";
@@ -13,6 +13,7 @@ import {
   WayProperties,
 } from "@/types/graph/sigmaGraph.type";
 import { SelectedItem } from "./GraphWrapper";
+import { getPriorityColor } from "@/lib/utils";
 
 
 interface GraphRenderProps {
@@ -21,23 +22,24 @@ interface GraphRenderProps {
 }
 
 function getNodeColor(props: any): string {
-  switch (true) {
-    case props?.highway === undefined:
-      return "pink";
-    case props?.highway === `service`:
-      return "green";
-    case props?.access === "private":
-      return "green";
+  return "orange";
+  // switch (true) {
+  //   case props?.highway === undefined:
+  //     return "pink";
+  //   case props?.highway === `service`:
+  //     return "green";
+  //   case props?.access === "private":
+  //     return "green";
 
-    default:
-      if (props.name || props.destination) {
-        return "orange";
-      } else if (/link/i.test(props.highway)) {
-        return "blue";
-      } else {
-        return "red";
-      }
-  }
+  //   default:
+  //     if (props.name || props.destination) {
+  //       return "orange";
+  //     } else if (/link/i.test(props.highway)) {
+  //       return "blue";
+  //     } else {
+  //       return "red";
+  //     }
+  // }
 }
 
 const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
@@ -81,12 +83,12 @@ const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
           } else {
             graph.addNode(element.id, {
               label: nodeLabel,
+              priority: n.properties.priority, 
               tags: {
-                ...element.tags,
                 nodeId: element.id,
                 ways: [n.properties],
               },
-              size: 2,
+              size: 1,
               x: element.lon,
               y: element.lat,
               color,
@@ -97,14 +99,23 @@ const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
         }
       });
     });
-    const devicesRelations: DevicesRelations[] = [];
+    const devicesRelations: Relationships[] = [];
     graphData.relationships.forEach((r) => {
       switch (r.type) {
         case "CONNECTED_TO":
           try {
-            graph.addEdge(r.startNodeId.toString(), r.endNodeId.toString(), {
+            const sourceId = r.startNodeId.toString();
+            const targetId = r.endNodeId.toString();
+
+            const source = graph.getNodeAttributes(sourceId);
+            const target = graph.getNodeAttributes(targetId);
+
+            const color = getPriorityColor(source.priority, target.priority);
+
+            graph.addEdge(sourceId, targetId, {
               label: r.type,
-              color: "gray",
+              color,
+              size: 2,
             });
           } catch (error) {
             console.error("Erro ao adicionar edge CONNECTED_TO", error);
@@ -112,8 +123,9 @@ const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
           break;
 
         case "HAS_SEMAFORO":
-        case "DEVICE_BETWEEN":
-          devicesRelations.push(r as DevicesRelations);
+          devicesRelations.push(r as Relationships);
+        case "BETWEEN_ON":
+          devicesRelations.push(r as Relationships);
           break;
 
         default:
@@ -133,11 +145,11 @@ const GraphRender = ({ graphData, setSelectedItem }: GraphRenderProps) => {
     });
 
     sigmaRef.current.on("enterNode", (e) => {
-      graph.setNodeAttribute(e.node, "size", 3);
+      graph.setNodeAttribute(e.node, "size", 2);
     });
 
     sigmaRef.current.on("leaveNode", (e) => {
-      graph.setNodeAttribute(e.node, "size", 2);
+      graph.setNodeAttribute(e.node, "size", 1);
     });
 
     return () => {

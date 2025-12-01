@@ -1,94 +1,146 @@
+"use client";
 
 import React, { useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
+import { DndContext, useDroppable, DragEndEvent } from "@dnd-kit/core";
 import { Button } from "@/components/ui/button";
 import { SemaforoDto } from "@/types/devices/semaforo/semaforoDto.type";
-import { MiniSemaforoCard, MiniSemaforoCardType } from "../cards/MiniSemaforoCard";
-import { SubPack, SubPackCard } from "../cards/SubPackCard";
 import { CheckCircle, CirclePlus } from "lucide-react";
+import { MiniDraggable } from "../dragAndDrop/miniDraggable";
 
-
-interface PackPanelProps {
+interface SubPack {
+  id: string;
+  name: string;
   semaforos: SemaforoDto[];
 }
 
-export const PackPanel = ({ semaforos }: PackPanelProps) => {
-  const [availableSemaforos, setAvailableSemaforos] =
-    useState<SemaforoDto[]>(semaforos);
+interface PackPanelProps {
+  semaforos: SemaforoDto[];
+  onConfirm?: (looseSemaforos: SemaforoDto[], subPacks: SubPack[]) => void;
+}
 
-  const [subPacks, setSubPacks] = useState<SubPackCard[]>([]);
+export const PackPanel = ({ semaforos, onConfirm }: PackPanelProps) => {
+  const [availableSemaforos, setAvailableSemaforos] = useState<SemaforoDto[]>(semaforos);
+  const [looseSemaforos, setLooseSemaforos] = useState<SemaforoDto[]>([]);
+  const [subPacks, setSubPacks] = useState<SubPack[]>([]);
 
-  const handleDropSemaforo = (semaforo: MiniSemaforoCardType, subPackId: number) => {
-    setSubPacks((prev) =>
-      prev.map((sp) =>
-        sp.id === subPackId
-          ? { ...sp, semaforos: [...sp.semaforos, semaforo] }
-          : sp
-      )
-    );
-    setAvailableSemaforos((prev) => prev.filter((s) => s.id !== semaforo.id));
-  };
-
+  // Criar novo SubPack
   const createSubPack = () => {
-    const newSubPack: SubPackCard = {
-      id: Date.now(),
+    const newSubPack: SubPack = {
+      id: Date.now().toString(),
       name: `SubPack ${subPacks.length + 1}`,
       semaforos: [],
     };
-    setSubPacks((prev) => [...prev, newSubPack]);
+    setSubPacks(prev => [...prev, newSubPack]);
+  };
+
+  // Função para mover semáforo para looseSemaforos
+  const addToLoose = (id: string) => {
+    const sem = availableSemaforos.find(s => s.id === id);
+    if (!sem) return;
+    setLooseSemaforos(prev => [...prev, sem]);
+    setAvailableSemaforos(prev => prev.filter(s => s.id !== id));
+  };
+
+  // Função para mover semáforo para SubPack
+  const addToSubPack = (subPackId: string, semaforoId: string) => {
+    const sem = availableSemaforos.find(s => s.id === semaforoId);
+    if (!sem) return;
+    setSubPacks(prev =>
+      prev.map(sp =>
+        sp.id === subPackId ? { ...sp, semaforos: [...sp.semaforos, sem] } : sp
+      )
+    );
+    setAvailableSemaforos(prev => prev.filter(s => s.id !== semaforoId));
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over) return;
+
+    const activeId = active.id as string;
+    const overId = over.id as string;
+
+    if (overId === "loose-dropzone") {
+      addToLoose(activeId);
+    }
+
+    const spId = subPacks.find(sp => sp.id.toString() === overId)?.id;
+    if (spId) {
+      addToSubPack(spId, activeId);
+    }
+  };
+
+  const SubPackCard = ({ subPack }: { subPack: SubPack }) => {
+    const { setNodeRef } = useDroppable({ id: subPack.id.toString() });
+    return (
+      <div ref={setNodeRef} className="border rounded-lg p-2 w-60 flex flex-col gap-2 bg-white dark:bg-neutral-900 shadow">
+        <h4 className="font-semibold">{subPack.name}</h4>
+        <div className="flex flex-wrap gap-2">
+          {subPack.semaforos.map(s => (
+            <MiniDraggable key={s.id} semaforo={s} />
+          ))}
+          {subPack.semaforos.length === 0 && (
+            <p className="text-sm text-muted-foreground italic">Arraste semáforos aqui</p>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  const LooseDropZone = () => {
+    const { setNodeRef } = useDroppable({ id: "loose-dropzone" });
+    return (
+      <div
+        ref={setNodeRef}
+        className="min-h-[120px] border-2 border-dashed rounded-lg p-2 flex flex-wrap gap-2 bg-gray-50 dark:bg-neutral-800"
+      >
+        {looseSemaforos.map(s => <MiniDraggable key={s.id} semaforo={s} />)}
+        {looseSemaforos.length === 0 && (
+          <p className="text-sm text-muted-foreground italic">
+            Arraste os semáforos aqui ou crie subpacks
+          </p>
+        )}
+      </div>
+    );
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndContext onDragEnd={handleDragEnd}>
       <div className="flex gap-4 w-full">
-        <div className="w-1/4 p-2 ">
+        {/* Disponíveis */}
+        <div className="w-1/4 p-2 border-r border-gray-200 dark:border-neutral-700">
           <h2 className="font-bold mb-2">Semáforos disponíveis</h2>
-          {semaforos.length === 0 ? (
-            <p className="text-sm text-muted-foreground italic">
-              Busque os semáforos do pacote
-            </p>
-          ) : (
-            semaforos.map((s) => (
-              <MiniSemaforoCard
-                key={s.id}
-                semaforo={{
-                  deviceId: s.deviceId,
-                  id: s.id,
-                  isActive: s.isActive || false,
-                }}
-              />
-            ))
-          )}
+          <div className="flex flex-col gap-2">
+            {availableSemaforos.length === 0 ? (
+              <p className="text-sm text-muted-foreground italic">Nenhum semáforo disponível</p>
+            ) : (
+              availableSemaforos.map(s => <MiniDraggable key={s.id} semaforo={s} />)
+            )}
+          </div>
         </div>
 
-        <div className=" p-2 w-full">
-          <h2 className="font-bold mb-2">Organização</h2>
-          <div className="border rounded-2xl w-full flex wrap min-h-10">
-            {subPacks.map((sp) => (
-              <SubPack
-                key={sp.id}
-                subPack={sp}
-                onDropSemaforo={handleDropSemaforo}
-              />
-            ))}
+        {/* Organização */}
+        <div className="w-3/4 p-2 flex flex-col gap-4">
+          <h2 className="font-bold mb-2">Organização do Pack</h2>
+          <LooseDropZone />
+          <div className="flex gap-4 flex-wrap">
+            {subPacks.map(sp => <SubPackCard key={sp.id} subPack={sp} />)}
           </div>
-          <div className="flex justify-end items-center">
-            <Button className="m-4" onClick={createSubPack}>
-              <CirclePlus />
-              Criar SubPack
+
+          <div className="flex justify-end gap-2 mt-4">
+            <Button onClick={createSubPack} variant="outline" className="flex items-center gap-2">
+              <CirclePlus /> Criar SubPack
             </Button>
             <Button
-              // onClick={handleConfirmClick} 
+              onClick={() => onConfirm?.(looseSemaforos, subPacks)}
               className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white transition-colors"
             >
-              <CheckCircle className="w-4 h-4" />
-              Confirmar
+              <CheckCircle /> Confirmar
             </Button>
           </div>
         </div>
       </div>
-    </DndProvider>
+    </DndContext>
   );
 };

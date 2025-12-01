@@ -2,7 +2,6 @@
 import { BaseTable } from "@/components/ui/table/BaseTable";
 import { DevicesClient } from "@/services/devices.service";
 import { SemaforoFilters } from "@/types/devices/device.filters.type";
-import { Semaforo } from "@/types/devices/devices.interface";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { TrafficLightFilters } from "./TrafficLightFilters";
@@ -40,7 +39,8 @@ export default function TrafficLightTable() {
         columns={[
           { key: "deviceId", label: t("Table.device") },
           { key: "macAddress", label: t("Table.mac") },
-          { key: "ip", label: t("Table.ip") },
+          { key: "green_start", label: t("Table.green_start") },
+          { key: "green_duration", label: t("Table.green_duration") },
           {
             key: "createdAt",
             label: t("Table.createAt"),

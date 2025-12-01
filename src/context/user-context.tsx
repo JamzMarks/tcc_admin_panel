@@ -20,13 +20,17 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchUser = async () => {
-    setError(null);
     try {
       const res = await AuthClient.Me();
       setUser(res.data);
     } catch (err) {
-      setError("Não foi possível atualizar os dados do usuário.");
-      setUser(null);
+      try {
+        await AuthClient.RefreshToken();
+        const res = await AuthClient.Me();
+        setUser(res.data);
+      } catch {
+        setUser(null);
+      }
     } finally {
       setLoading(false);
     }

@@ -4,11 +4,11 @@ import { Eye, Trash2 } from "lucide-react";
 
 interface SemaforoCardProps {
   semaforo: SemaforoDto;
-  onRemove?: (id?: number) => void;
+  onRemove?: (id?: string) => void;
   onView?: (semaforo: SemaforoDto) => void;
 }
 
-const SemaforoCard: React.FC<SemaforoCardProps> = ({ semaforo, onRemove, onView }) => {
+export const SemaforoCard: React.FC<SemaforoCardProps> = ({ semaforo, onRemove, onView }) => {
   return (
     <div className="bg-white dark:bg-neutral-900 border dark:border-neutral-800 rounded-2xl shadow p-4 w-60 flex flex-col justify-between transition hover:shadow-md">
       <div className="mb-2">
@@ -75,4 +75,6 @@ const SemaforoCard: React.FC<SemaforoCardProps> = ({ semaforo, onRemove, onView 
   );
 };
 
-export default SemaforoCard;
+
+
+

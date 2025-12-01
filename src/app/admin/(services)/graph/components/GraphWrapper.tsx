@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GraphFilters } from "./modal/GraphFilter";
 import { NodePanelWrapper } from "./NodePanelWrapper";
 import { GraphClient } from "@/services/graphService.service";
 import { WayWithNodes } from "@/types/graph/graph.type";
@@ -62,17 +61,6 @@ export const GraphWrapper = () => {
 
   return (
     <div className="relative">
-      <button
-        onClick={() => setIsFilterOpen(true)}
-        className="absolute top-2 left-2 z-10 bg-blue-600 text-white px-3 py-1 rounded shadow"
-      >
-        Filtros
-      </button>
-
-      <GraphFilters
-        isFilterOpen={isFilterOpen}
-        setIsFilterOpen={setIsFilterOpen}
-      />
 
       <NodePanelWrapper
         selectedItem={selectedItem}

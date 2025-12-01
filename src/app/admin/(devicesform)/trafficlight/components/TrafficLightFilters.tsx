@@ -72,7 +72,6 @@ export const TrafficLightFilters = ({ onFilter, filters }: TrafficLightFiltersPr
           filters={filters}
           setFilters={onFilter}
           field={"isActive"}    
-          
         />
         <button
           onClick={resetFilters}

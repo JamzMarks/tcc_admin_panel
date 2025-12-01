@@ -67,13 +67,13 @@ export const SemaforoFormModal = ({
   const handleSubmit = async () => {
     if (!selected || !selectedWay) return;
     try {
-        const data = await GraphClient.LinkSemaforo({
-            semaforoData: selected,
-            wayId: selectedWay.wayId
-        }, nodeId);
-        console.log(data)
+        await DevicesClient.LinkSemaforo({
+            semaforoDeviceId: selected.deviceId,
+            wayId: selectedWay.wayId,
+            nodeId: nodeId
+        });
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 
 

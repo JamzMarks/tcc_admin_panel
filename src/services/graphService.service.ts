@@ -30,13 +30,12 @@ class GraphService {
       method: "POST"
     });
   }
-
-  public async LinkSemaforo(data: LinkSemaforo, nodeId: string) {
-    return await apiFetch(`/dv/graph/nodes/${nodeId}/semaforo`, {
-      method: "POST",
-      body: JSON.stringify(data)
+  public async GetNodeSiblings(nodeId: string): Promise<any>{
+    return await apiFetch(`/dv/graph/${nodeId}/siblings`, {
+      method: "GET"
     });
   }
+  
 
 
 }

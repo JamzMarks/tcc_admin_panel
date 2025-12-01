@@ -15,8 +15,8 @@ export default function LoginPage() {
         <div className="w-full max-w-md bg-white dark:bg-card rounded-2xl shadow-lg p-6 sm:p-8 md:p-10 space-y-6 relative z-10">
           <div className="space-y-4 text-center">
             <div className="flex flex-col items-center">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-2">
-                <Image src="/logos/foxlogo.svg" fill alt="Logo" />
+              <div className="relative w-12 h-12 mx-auto mb-2">
+                <Image src="/logos/logo_m.svg" fill alt="Logo" />
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-foreground">
                 Tail<span className="text-primary">Fox</span>
