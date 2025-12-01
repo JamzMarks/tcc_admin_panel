@@ -30,7 +30,11 @@ class GraphService {
       method: "POST"
     });
   }
-
+  public async GetNodeSiblings(nodeId: string): Promise<any>{
+    return await apiFetch(`/dv/graph/${nodeId}/siblings`, {
+      method: "GET"
+    });
+  }
   
 
 

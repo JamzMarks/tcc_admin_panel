@@ -5,3 +5,10 @@ export interface LinkSemaforo {
   wayId: string;
   nodeId: string
 }
+
+export interface LinkDevice {
+  deviceId: string;
+  wayId: string;
+  nodeId: string;
+  siblingId: string;
+}

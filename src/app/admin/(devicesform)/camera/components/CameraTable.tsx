@@ -34,6 +34,7 @@ export default function CamerasTable() {
         error={isError}
         columns={[
           { key: "deviceId", label: t("Table.device") },
+          { key: "type", label: t("Table.type") },
           { key: "confiability", label: t("Table.confiability") },
           { key: "flow", label: t("Table.flow") },
           { key: "ip", label: t("Table.ip") },

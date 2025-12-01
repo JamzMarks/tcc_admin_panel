@@ -2,7 +2,7 @@ import { apiFetch } from "@/lib/api/client";
 import { CreateDeviceDto } from "@/types/devices/sensors/create.device.type";
 import { DeviceFilters, SemaforoFilters } from "@/types/devices/device.filters.type";
 import { CreateSemaforo, SemaforoDto, SemaforoInfoDto, UpdateSemaforo } from "@/types/devices/semaforo/semaforoDto.type";
-import { LinkSemaforo } from "@/types/graph/linkGraph.type";
+import { LinkDevice, LinkSemaforo } from "@/types/graph/linkGraph.type";
 import { ApiResponse } from "@/types/interfaces/apiResponse";
 import { buildQuery } from "@/utils/queryBuild";
 import { DeviceDto } from "@/types/devices/sensors/device.type";
@@ -117,6 +117,13 @@ class DevicesService {
       onMessage(mockMsg);
       t++;
     }, 4000);
+  }
+
+  public async LinkDispositivo(data: LinkDevice): Promise<ApiResponse<void>> {
+    return await apiFetch(`/dv/camera/${data.deviceId}/link`, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
   }
 };
 

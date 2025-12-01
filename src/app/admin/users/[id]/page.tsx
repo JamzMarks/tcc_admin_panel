@@ -187,7 +187,7 @@ const UserPage = () => {
       )}
       
     </SectionWithHeader>
-    <UserLogs />
+
     </div>
   );
 };

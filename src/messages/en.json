@@ -271,6 +271,7 @@
         "status": "Status",
         "device": "Device ID",
         "mac": "MAC",
+        "type": "Device Type",
         "ip": "IP Address",
         "flow": "Last Flow",
         "confiability": "Confiability",
@@ -290,6 +291,8 @@
       "Table": {
         "status": "Status",
         "device": "Device ID",
+        "green_start": "Green Start",
+        "green_duration": "Green Duration",
         "mac": "MAC",
         "ip": "IP Address",
         "createAt": "Created at",

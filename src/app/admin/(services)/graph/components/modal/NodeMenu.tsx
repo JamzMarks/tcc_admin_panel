@@ -12,6 +12,7 @@ import { GraphClient } from "@/services/graphService.service";
 import { RequestModal } from "@/components/ui/modal/RequestModal";
 import { SemaforoFormModal } from "./SemaforoFormModal";
 import { SelectedItem } from "../GraphWrapper";
+import { DeviceFormModal } from "./DeviceFormModal";
 
 interface NodeMenuProps {
   selectedItem: SelectedItem | null;
@@ -52,8 +53,8 @@ const DataRenderer = ({ data }: { data: any }) => {
 };
 
 export const NodeMenu = ({ selectedItem, setSelectedItem }: NodeMenuProps) => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [semaforoFormOpen, setSemaforoFormOpen] = useState(false);
+  const [deviceFormModal, setDeviceFormModal] = useState(false);
 
   if (!selectedItem) return null;
 
@@ -78,33 +79,29 @@ export const NodeMenu = ({ selectedItem, setSelectedItem }: NodeMenuProps) => {
           </div>
 
           <div className="border-t p-4 flex gap-2">
-            <Button
-              className="bg-primary outline-0 cursor-pointer hover:bg-orange-600"
-              onClick={() => setModalOpen(true)}
-            >
-              ClearWayNode
-            </Button>
+
             <Button
               className="bg-primary outline-0 cursor-pointer hover:bg-orange-600"
               onClick={() => setSemaforoFormOpen(true)}
             >
               Vincular Semáforo
             </Button>
+            <Button
+              className="bg-primary outline-0 cursor-pointer hover:bg-orange-600"
+              onClick={() => setDeviceFormModal(true)}
+            >
+              Vincular Dispositivo
+            </Button>
           </div>
         </SheetContent>
       </Sheet>
 
-      <RequestModal
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-        title="Limpar Way Node"
-        message={`Deseja realmente limpar o Way?`}
-        asyncAction={async () => {
-          const wayId = selectedItem.data.tags.wayProps?.wayId;
-          return await GraphClient.ClearWayNode(wayId);
-        }}
-        onSuccess={() => console.log("Way Node limpo com sucesso!")}
-        onError={(err) => console.error("Erro ao limpar Way Node:", err)}
+
+      <DeviceFormModal
+        open={deviceFormModal}
+        onOpenChange={setDeviceFormModal}
+        ways={selectedItem.data.tags.ways}
+        nodeId={selectedItem.data.tags.nodeId!}
       />
 
       <SemaforoFormModal

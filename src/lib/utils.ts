@@ -6,11 +6,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getPriorityColor(p1: number, p2: number): string {
-  const max = Math.max(p1, p2);
+  const avg = (p1 + p2) / 2;
 
-  if (max <= 0.2) return "#bfbfbf";        // cinza
-  if (max <= 0.4) return "#4caf50";        // verde
-  if (max <= 0.6) return "#ffeb3b";        // amarelo
-  if (max <= 0.8) return "#ff5252";        // vermelho
-  return "#b71c1c";                        // vermelho escuro
+  if (avg <= 0.4) return "#bfbfbf";     // cinza
+  if (avg <= 0.5) return "#2196F3";     // azul (nova faixa)
+  if (avg <= 0.65) return "#4caf50";     // verde
+  if (avg <= 0.75) return "#ffeb3b";    // amarelo (curta)
+  if (avg <= 1) return "#ff5252";     // vermelho
+  return "#b71c1c";                     // vermelho escuro
 }
+
