@@ -14,3 +14,10 @@ export interface Pagination {
     limit?: number| null,
 }
 
+
+export interface FullDeviceFilters extends DeviceFilters {
+    type?: string | null,
+    minFlow?: number| null,
+    maxFlow?: number| null,
+}
+
